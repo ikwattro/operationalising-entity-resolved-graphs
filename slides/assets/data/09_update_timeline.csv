@@ -1,0 +1,8 @@
+step,time,event,record_id,source,affected_entities,note
+1,T+0s,push,P001,kyc,[1001],new entity created from KYC record
+2,T+12s,push,P002,wires,[1001],wires record resolves into existing entity by name+DOB
+3,T+45m,push,P003,registry,[1001],registry record adds an identifier passport AE9981772
+4,T+3h,push,P099,wires,[1001 1042],new wires record shares passport with P003; merges 1042 into 1001
+5,T+1d,push,P150,kyc,[1001],adds phone number to entity no redo cascade
+6,T+2d,push,P200,registry,[1001 1042],registry update contradicts passport; force-split into 1001 and 1042
+7,T+3d,push,P201,kyc,[1042],new KYC record matches the split-off entity 1042 cleanly
