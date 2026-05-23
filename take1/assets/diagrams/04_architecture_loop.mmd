@@ -1,0 +1,17 @@
+%% Architecture: the data → graph → Senzing → graph loop with reinforcement.
+flowchart LR
+    SRC[Source systems<br/>KYC, wires, registries]
+    NORM[Pre-processing<br/>normalise + enrich]
+    GIN[(Graph<br/>input layer)]
+    SZ[[Senzing<br/>resolution engine]]
+    GOUT[(Graph<br/>resolved entities + features)]
+    HEUR[Graph heuristics<br/>community, co-occurrence]
+    CONS[Downstream consumers<br/>analysts, investigations, APIs]
+
+    SRC -->|raw records| NORM
+    NORM -->|aligned records| GIN
+    GIN -->|push records<br/>DATA_SOURCE + RECORD_ID + features| SZ
+    SZ -->|affected entities| GOUT
+    GOUT -->|graph features<br/>community, paths, co-occurrence| HEUR
+    HEUR -.->|FORCE MERGE / FORCE APART<br/>reinforcement signals| SZ
+    GOUT -->|resolved entities + lineage| CONS

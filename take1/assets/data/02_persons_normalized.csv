@@ -1,0 +1,11 @@
+record_id,source,full_name,dob,country,name_norm,dob_norm,country_iso3,dedup_hash
+P001,kyc,Mohammed Al-Rashid,1982-03-14,AE,mohammed al rashid,1982-03-14,ARE,38d2f8ef964b7af1
+P002,wires,mohammed al rashid,14/03/1982,United Arab Emirates,mohammed al rashid,1982-03-14,ARE,38d2f8ef964b7af1
+P003,registry,M. Al-Rashid,Mar 14 1982,U.A.E.,mohammed al rashid,1982-03-14,ARE,38d2f8ef964b7af1
+P004,kyc,Dr. Sarah Chen,1990-07-22,SG,sarah chen,1990-07-22,SGP,419788d799247f30
+P005,wires,Sarah Chen,22-07-1990,Singapore,sarah chen,1990-07-22,SGP,419788d799247f30
+P006,kyc,Robert Smith Jr.,1975-11-02,US,robert smith,1975-11-02,USA,21a2e7f090ad2cb7
+P007,wires,Bob Smith,11/02/1975,USA,robert smith,1975-11-02,USA,21a2e7f090ad2cb7
+P008,kyc,Jose María García,1988-01-30,ES,jose maria garcia,1988-01-30,ESP,616dcf313c6c0d86
+P009,wires,Jose Maria Garcia,30/01/1988,Spain,jose maria garcia,1988-01-30,ESP,616dcf313c6c0d86
+P010,registry,J.M. Garcia,1988-01-30,ESP,jose maria garcia,1988-01-30,ESP,616dcf313c6c0d86

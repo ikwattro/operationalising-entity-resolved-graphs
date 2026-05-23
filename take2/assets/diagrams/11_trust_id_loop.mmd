@@ -1,0 +1,12 @@
+flowchart LR
+    GE[Graph evidence<br/>OWNS, FATHER_OF,<br/>face embeddings,<br/>co-occurrence]
+    DL[Graph decision layer<br/>generate trust IDs]
+    GIN[(Graph input layer<br/>records with TRUST_ID set)]
+    SZ[[Senzing<br/>re-resolves with trust ID]]
+    GOUT[(Graph — resolved<br/>new RESOLVED_TO edges<br/>WHY carries graph signal)]
+
+    GE --> DL
+    DL -->|write TRUST_ID on records| GIN
+    GIN -->|record update| SZ
+    SZ -->|affected entities| GOUT
+    GOUT -.->|new evidence| GE

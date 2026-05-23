@@ -1,0 +1,11 @@
+record_id,source,legal_name,country,reg_number
+C001,registry,Acme Industries GmbH,DE,HRB12345
+C002,wires,Acme Industries G.m.b.H.,Germany,HRB 12345
+C003,kyc,ACME INDUSTRIES GMBH,DEU,HRB-12345
+C004,registry,Bright Future Ltd,GB,09876543
+C005,wires,Bright Future Limited,United Kingdom,09876543
+C006,registry,Apex Corporation,US,
+C007,wires,Apex Corp.,USA,
+C008,kyc,Apex Corp,U.S.A.,
+C009,registry,Smith & Sons Trading,GB,11223344
+C010,wires,Smith and Sons Trading,UK,11223344

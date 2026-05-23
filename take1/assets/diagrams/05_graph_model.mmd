@@ -1,0 +1,49 @@
+%% Graph model for resolved entities.
+%% Source records become typed nodes (Person, Company, ...).
+%% EntityGroup is the graph representation of Senzing's Entity concept.
+%% Records stay separate and tied to their Source so RBAC filtering applies at the record level.
+classDiagram
+    class Source {
+      +code: String
+      +description: String
+    }
+    class Person {
+      +record_id: String
+      +source_code: String
+      +raw_payload: JSON
+      +normalised_payload: JSON
+      +name: String
+      +dob: Date
+      +country_iso3: String
+      +dedup_hash: String
+      +ingested_at: DateTime
+    }
+    class Company {
+      +record_id: String
+      +source_code: String
+      +raw_payload: JSON
+      +normalised_payload: JSON
+      +name_core: String
+      +legal_form: String
+      +reg_number_norm: String
+      +country_iso3: String
+      +ingested_at: DateTime
+    }
+    class EntityGroup {
+      +entity_id: Long
+      +match_level: String
+      +last_affected_at: DateTime
+    }
+    class Community {
+      +community_id: String
+      +algorithm: String
+      +computed_at: DateTime
+    }
+
+    Source "1" <-- "many" Person : FROM
+    Source "1" <-- "many" Company : FROM
+    Person "many" --> "1" EntityGroup : RESOLVED_TO
+    Company "many" --> "1" EntityGroup : RESOLVED_TO
+    EntityGroup "many" -- "many" EntityGroup : RELATED_TO
+    EntityGroup "many" -- "many" EntityGroup : CO_OCCURS_WITH
+    EntityGroup "many" --> "0..1" Community : MEMBER_OF

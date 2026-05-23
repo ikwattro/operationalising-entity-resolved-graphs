@@ -1,0 +1,15 @@
+{
+  "name": "marp-slides-template",
+  "version": "1.0.0",
+  "description": "Single-presentation Marp slides template",
+  "scripts": {
+    "build": "mkdir -p dist && marp slides.md --allow-local-files --output dist/slides.html && cp -r assets dist/ && cp -r theme dist/",
+    "build:pdf": "mkdir -p dist && marp slides.md --allow-local-files --pdf --output dist/slides.pdf",
+    "build:pptx": "mkdir -p dist && marp slides.md --allow-local-files --pptx --output dist/slides.pptx",
+    "watch": "mkdir -p dist && marp slides.md --allow-local-files --watch --output dist/slides.html",
+    "preview": "marp slides.md --allow-local-files --preview"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^3.4.0"
+  }
+}

@@ -1,0 +1,11 @@
+record_id,source,address_as_given,country_hint,naive_geocode_country,plausible,note
+A001,kyc,Frederick Street Port of Spain,TT,IN,no,Frederick Street also exists in India and outranks the Trinidad match
+A002,kyc,Frederick Street Port of Spain Trinidad,TT,TT,yes,country token in the address corrects the bias
+A003,wires,Independence Square,,IN,unknown,too generic; matches a dozen countries
+A004,wires,Independence Square Port of Spain,TT,TT,yes,city anchor disambiguates
+A005,kyc,Marine Drive,IN,IN,yes,famous Mumbai location matched correctly
+A006,kyc,Marine Drive,LB,IN,no,Beirut Marine Drive lost to Mumbai by popularity
+A007,registry,Rue Saint-Honoré,FR,FR,yes,unambiguous with country hint
+A008,registry,Rue Saint-Honoré,HT,FR,no,Haiti also has Rue Saint-Honoré; FR wins by data volume
+A009,wires,Main Street,US,US,unknown,~10000 candidates; needs city + postcode to resolve
+A010,wires,Main Street Springfield IL,US,US,yes,city plus state narrows to a single match

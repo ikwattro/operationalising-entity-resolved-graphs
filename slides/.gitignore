@@ -1,0 +1,10 @@
+node_modules/
+dist/
+scratch/*
+!scratch/.gitkeep
+.DS_Store
+~$*
+.vscode/
+.idea/
+.env
+.env.local

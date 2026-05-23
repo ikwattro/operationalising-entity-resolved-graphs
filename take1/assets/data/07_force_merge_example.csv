@@ -1,0 +1,5 @@
+entity_id,records,name_variants,shared_addresses,shared_phones,shared_counterparties,community_id,senzing_match_level,graph_recommendation
+2001,[P010 P018],Ahmad H. / A. Hassan,4,2,9,C-77,POSSIBLY_RELATED,FORCE_MERGE
+2002,[P033 P044],Ahmad Hassan,4,2,9,C-77,POSSIBLY_RELATED,FORCE_MERGE
+3105,[P201 P207 P210],Sergey Volkov / S. Volkov,0,0,0,C-12 C-44,RESOLVED,FORCE_APART
+3106,[P211],Sergei Volkov,0,0,0,C-99,(new),(no change)

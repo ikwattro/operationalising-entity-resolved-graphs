@@ -1,0 +1,19 @@
+flowchart LR
+    SRC[Source systems<br/>KYC, wires, registries, sanctions]
+    DQ[DQ + normalisation<br/>alignment, dedup hash]
+    GIN[(Graph — input layer<br/>raw + normalised<br/>exploded, disconnected)]
+    SZ[[Senzing<br/>resolution engine]]
+    GOUT[(Graph — resolved<br/>EntityGroup, RESOLVED_TO,<br/>RELATED_TO, lineage)]
+    HEUR[Graph decision layer<br/>trust IDs from graph evidence]
+    AUDIT[(Audit / history<br/>OverrideDecision, change log)]
+    CONS[Consumers<br/>Hume Smart ER, investigations, APIs]
+
+    SRC -->|raw records| DQ
+    DQ -->|aligned records| GIN
+    GIN -->|push records| SZ
+    SZ -->|affected entities| GOUT
+    GOUT -->|graph evidence| HEUR
+    HEUR -.->|trust-ID record updates| GIN
+    GOUT --> AUDIT
+    HEUR --> AUDIT
+    GOUT -->|resolved + RBAC-filtered| CONS
