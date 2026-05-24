@@ -1,3 +1,4 @@
 scratch.md
 _tmp/*
 !_tmp/.gitkeep
+.DS_Store

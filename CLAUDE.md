@@ -6,51 +6,57 @@ Joint **Senzing + GraphAware** workshop for the **Bridge meetup, 2026**.
 
 Title: *Operationalising Entity Resolved Graphs*.
 
-Co-presenters: Christophe Willemsen (GraphAware CTO) and Paco (Senzing). Paco is the source of truth for anything Senzing-internal.
+Co-presenters:
+- **Paco Nathan** ([@ceteri](https://github.com/ceteri)) — Principal Developer Relations Engineer at Senzing. Paco is the source of truth for anything Senzing-internal.
+- **Christophe Willemsen** ([@ikwattro](https://github.com/ikwattro)) — CTO at GraphAware.
 
 ## What this repo is for
 
-This repo is the **content workspace** for the workshop. We draft prose, speaker notes, and supporting assets here, one section at a time. Slides are generated **elsewhere** by a separate repo/agent that consumes the Markdown produced here.
-
-Out of scope for this repo:
-- Slide layouts, decks, visual designs.
-- Image rendering (diagrams stay as Mermaid or ASCII; the slide repo handles rendering).
+This repo is the **content workspace** for the workshop: speaker notes, section prose, supporting assets, Senzing API examples, and the Marp-based slide deck. We draft content here, one section at a time.
 
 ## Layout
 
 ```
-take1/                                 frozen previous iteration — do NOT edit
-  sections/                            13 section files from the pre-phase outline
-  assets/                              supporting assets for take1
-
-take2/                                 ACTIVE iteration — current source of truth
-  sections/                            13 phase-based section files (00 → 12)
+notes/                                 ACTIVE content — primary source of truth
+  sections/                            13 section files (00 → 12)
     00-running-order.md                canonical workshop spine + per-section budget
     01-intro.md … 12-phase6-…          one .md per section, primary unit of work
   assets/
-    data/                              illustrative CSVs + min_aml/ (real Paco data)
+    data/                              illustrative CSVs + min_aml/ (Senzing JSONL)
       min_aml/                         Senzing-formatted JSONL (open-ownership.json,
-                                         open-sanctions.json) — used live in Sections
+                                         open-sanctions.json) — used live in sections
                                          06, 07, 08, 09, 11
     diagrams/                          Mermaid sources + rendered PNGs
     snippets/                          Senzing JSON examples, Cypher mappings
   TODOS.md                             central inbox of open questions + missing
                                          assets, grouped by section, owner-tagged
 
-references/                            external pointers (min_aml, prior talks)
-scratch.md                             original outline + updated outline — read-only
+how/                                   Senzing WHY / HOW API examples
+  explain_how.py                       renders a HOW response JSON to HTML
+  explain_why.py                       renders a WHY response JSON to HTML
+  senzing-*.json                       example API responses
+  *-report.html                        rendered HTML outputs
+
+mappings/                              Python mapping code: graph records → Senzing JSON
+  mapping.py                           base mapping template (used in Hume pipelines)
+  mapping_person.py                    person-specific mapping
+  mapping_organization.py             org-specific mapping
+
+slides/                                Marp slide deck (self-contained sub-project)
+  slides.md                            master slide source
+  CLAUDE.md                            slide-specific instructions for Claude
+  README.md                            how to build and preview the deck
+  Makefile                             build targets (dev, build, pdf)
+
+references/                            external data references (min_aml, prior talks)
+screenshots/                           screenshots used in the README and slides
+_tmp/                                  gitignored scratch space (only .gitkeep tracked)
 CLAUDE.md                              this file
 ```
 
-**Versioning convention:** the workshop has been iterated more than once. Older
-iterations land in `takeN/` directories and are preserved as references; the
-highest-numbered `takeN/` is the active source of truth. Today that is `take2/`.
-Do not edit older takes. If a new iteration is needed, create `take3/` and copy
-forward — never overwrite history.
-
 ## Section file template
 
-Every `take2/sections/*.md` follows this structure. Keep it consistent so the downstream slide agent has a predictable shape.
+Every `notes/sections/*.md` follows this structure. Keep it consistent.
 
 ```markdown
 # <section title>
@@ -72,10 +78,10 @@ Moved to [`../TODOS.md`](../TODOS.md).
 ```
 
 **Open questions / TODOs convention.** Per-section "Open questions" blocks have
-been **centralised** into `take2/TODOS.md`, grouped by section and tagged by
+been **centralised** into `notes/TODOS.md`, grouped by section and tagged by
 owner (`Paco` / `Christophe` / `Joint`). The block in each section file is now a
 pointer, not a list. When new open questions surface during editing, add them to
-`take2/TODOS.md` under the relevant section heading — do not re-populate the
+`notes/TODOS.md` under the relevant section heading — do not re-populate the
 in-section block.
 
 **Inline narrative hedges.** A `> [verify with Paco]` blockquote inside the
@@ -93,12 +99,21 @@ each other; they serve different audiences.
 
 ## Scope discipline
 
-- **Do not invent Senzing behaviour.** If you're unsure how Senzing handles something (redo triggers, idempotence semantics, internal feature weighting), add it to `take2/TODOS.md` under the relevant section, *and* optionally drop a `> [verify with Paco]` blockquote inline at the point in the narrative where the uncertainty bites. Never substitute a hedge for an explanation.
-- **Do not propose slide structure or visual design.** That's the downstream repo's job.
+- **Do not invent Senzing behaviour.** If you're unsure how Senzing handles something (redo triggers, idempotence semantics, internal feature weighting), add it to `notes/TODOS.md` under the relevant section, *and* optionally drop a `> [verify with Paco]` blockquote inline at the point in the narrative where the uncertainty bites. Never substitute a hedge for an explanation.
 - **Do not over-engineer.** No custom agents, hooks, or build tooling unless Christophe asks. The repo is prose + small assets.
 
 ## Key references
 
-- **min_aml dataset** — Paco supplied the Senzing-formatted version directly. Lives at `take2/assets/data/min_aml/open-ownership.json` (316 UK beneficial-ownership records) and `take2/assets/data/min_aml/open-sanctions.json` (24 sanctioned-entity records). Each line is one Senzing input record (JSON Lines). See `references/min_aml.md` for the per-record citations used in the sections.
-- **Hume 3** — GraphAware's product. Section 12 (Phase 6 — Consumption) reveals the *Smart ER in Advanced Expand* feature; further Hume 3.0 features for the reveal are still on Christophe to confirm (see `take2/TODOS.md`).
-- **Running order** — `take2/sections/00-running-order.md` is the canonical workshop spine: per-section minute budget, transition cues, audience-pause placement, speaker-swap suggestion. Update it whenever section content shifts time materially.
+- **min_aml dataset** — Paco supplied the Senzing-formatted version directly. Lives at `notes/assets/data/min_aml/open-ownership.json` (316 UK beneficial-ownership records) and `notes/assets/data/min_aml/open-sanctions.json` (24 sanctioned-entity records). Each line is one Senzing input record (JSON Lines). See `references/min_aml.md` for the per-record citations used in the sections.
+- **Hume 3** — GraphAware's product. Section 12 (Phase 6 — Consumption) reveals the *Smart ER in Advanced Expand* feature; further Hume 3.0 features for the reveal are still on Christophe to confirm (see `notes/TODOS.md`).
+- **Running order** — `notes/sections/00-running-order.md` is the canonical workshop spine: per-section minute budget, transition cues, audience-pause placement, speaker-swap suggestion. Update it whenever section content shifts time materially.
+
+## Working with the slides
+
+The `slides/` directory is a self-contained Marp project. See `slides/README.md` for build instructions. The slide content is driven by `slides/slides.md`, which is separate from the `notes/` content workspace.
+
+## Gitignore notes
+
+- `scratch.md` — excluded from git; use it freely for personal scratch notes.
+- `_tmp/` — excluded from git; only `.gitkeep` is tracked to preserve the directory.
+- `.DS_Store` — excluded.

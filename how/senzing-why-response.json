@@ -1,0 +1,1314 @@
+{
+    "enriched": {
+        "meta": {
+            "server": "Senzing REST API Server",
+            "httpMethod": "GET",
+            "httpStatusCode": 200,
+            "timings": {
+                "overall": 94,
+                "enqueued": 0,
+                "nativeAPI": 12,
+                "nativeAPI:engine.whyEntityByEntityID": 12,
+                "processRawData": 74
+            },
+            "timestamp": "2026-05-24T11:44:37.855Z",
+            "version": "3.5.7-9-dirty",
+            "restApiVersion": "3.4.1",
+            "nativeApiVersion": "3.8.0",
+            "nativeApiBuildVersion": "3.8.0.23303",
+            "nativeApiBuildNumber": "2023_10_30__10_45",
+            "nativeApiBuildDate": "2023-10-30T17:45:00.000Z",
+            "configCompatibilityVersion": "10"
+        },
+        "links": {
+            "self": "http://senzing-api-server:8582/entities/39/why",
+            "openApiSpecification": "http://senzing-api-server:8582/specifications/open-api"
+        },
+        "data": {
+            "whyResults": [
+                {
+                    "perspective": {
+                        "internalId": 39,
+                        "entityId": 39,
+                        "focusRecords": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "16267544270129485655"
+                            }
+                        ]
+                    },
+                    "matchInfo": {
+                        "whyKey": "+NAME+DOB+NATIONALITY",
+                        "matchLevel": "RESOLVED",
+                        "resolutionRule": "SNAME_SSTAB",
+                        "candidateKeys": {
+                            "DOB": [
+                                {
+                                    "featureId": 343,
+                                    "featureType": "DOB",
+                                    "featureValue": "1953-10-01"
+                                }
+                            ],
+                            "NAME_KEY": [
+                                {
+                                    "featureId": 345,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 346,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 347,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB=51001"
+                                },
+                                {
+                                    "featureId": 348,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB=51001"
+                                },
+                                {
+                                    "featureId": 349,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK"
+                                },
+                                {
+                                    "featureId": 350,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 351,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK"
+                                },
+                                {
+                                    "featureId": 352,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 353,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB=51001"
+                                },
+                                {
+                                    "featureId": 354,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 355,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 356,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR"
+                                }
+                            ]
+                        },
+                        "featureScores": {
+                            "DOB": [
+                                {
+                                    "featureType": "DOB",
+                                    "inboundFeature": {
+                                        "featureId": 343,
+                                        "featureType": "DOB",
+                                        "featureValue": "1953-10-01"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 343,
+                                        "featureType": "DOB",
+                                        "featureValue": "1953-10-01"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FMES",
+                                        "frequency": "MANY",
+                                        "exclusive": true,
+                                        "stable": true
+                                    }
+                                }
+                            ],
+                            "NAME": [
+                                {
+                                    "featureType": "NAME",
+                                    "inboundFeature": {
+                                        "featureId": 342,
+                                        "featureType": "NAME",
+                                        "featureValue": "Marika Elonka Canner",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 342,
+                                        "featureType": "NAME",
+                                        "featureValue": "Marika Elonka Canner",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "score": 100,
+                                    "nameScoringDetails": {
+                                        "fullNameScore": 100
+                                    },
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "NAME",
+                                        "frequency": "NAME",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "NATIONALITY": [
+                                {
+                                    "featureType": "NATIONALITY",
+                                    "inboundFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVM",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "RECORD_TYPE": [
+                                {
+                                    "featureType": "RECORD_TYPE",
+                                    "inboundFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVME",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": true,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "WEBSITE": [
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 344,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/14610541367369986997"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 498,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/5003853505566604686"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                },
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 344,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/14610541367369986997"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 402,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/3276348182001914102"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "perspective": {
+                        "internalId": 46,
+                        "entityId": 39,
+                        "focusRecords": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "17472277213181749768"
+                            }
+                        ]
+                    },
+                    "matchInfo": {
+                        "whyKey": "+NAME+DOB+NATIONALITY",
+                        "matchLevel": "RESOLVED",
+                        "resolutionRule": "SNAME_SSTAB",
+                        "candidateKeys": {
+                            "DOB": [
+                                {
+                                    "featureId": 343,
+                                    "featureType": "DOB",
+                                    "featureValue": "1953-10-01"
+                                }
+                            ],
+                            "NAME_KEY": [
+                                {
+                                    "featureId": 345,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 346,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 347,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB=51001"
+                                },
+                                {
+                                    "featureId": 348,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB=51001"
+                                },
+                                {
+                                    "featureId": 349,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK"
+                                },
+                                {
+                                    "featureId": 350,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 351,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK"
+                                },
+                                {
+                                    "featureId": 352,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 353,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB=51001"
+                                },
+                                {
+                                    "featureId": 354,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 355,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 356,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR"
+                                }
+                            ]
+                        },
+                        "featureScores": {
+                            "DOB": [
+                                {
+                                    "featureType": "DOB",
+                                    "inboundFeature": {
+                                        "featureId": 343,
+                                        "featureType": "DOB",
+                                        "featureValue": "1953-10-01"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 343,
+                                        "featureType": "DOB",
+                                        "featureValue": "1953-10-01"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FMES",
+                                        "frequency": "MANY",
+                                        "exclusive": true,
+                                        "stable": true
+                                    }
+                                }
+                            ],
+                            "NAME": [
+                                {
+                                    "featureType": "NAME",
+                                    "inboundFeature": {
+                                        "featureId": 342,
+                                        "featureType": "NAME",
+                                        "featureValue": "Marika Elonka Canner",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 342,
+                                        "featureType": "NAME",
+                                        "featureValue": "Marika Elonka Canner",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "score": 100,
+                                    "nameScoringDetails": {
+                                        "fullNameScore": 100
+                                    },
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "NAME",
+                                        "frequency": "NAME",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "NATIONALITY": [
+                                {
+                                    "featureType": "NATIONALITY",
+                                    "inboundFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVM",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "RECORD_TYPE": [
+                                {
+                                    "featureType": "RECORD_TYPE",
+                                    "inboundFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVME",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": true,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "WEBSITE": [
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 402,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/3276348182001914102"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 498,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/5003853505566604686"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                },
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 402,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/3276348182001914102"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 344,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/14610541367369986997"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "perspective": {
+                        "internalId": 53,
+                        "entityId": 39,
+                        "focusRecords": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "2654689820514522770"
+                            }
+                        ]
+                    },
+                    "matchInfo": {
+                        "whyKey": "+NAME+DOB+NATIONALITY",
+                        "matchLevel": "RESOLVED",
+                        "resolutionRule": "SNAME_SSTAB",
+                        "candidateKeys": {
+                            "DOB": [
+                                {
+                                    "featureId": 343,
+                                    "featureType": "DOB",
+                                    "featureValue": "1953-10-01"
+                                }
+                            ],
+                            "NAME_KEY": [
+                                {
+                                    "featureId": 345,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 346,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 347,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB=51001"
+                                },
+                                {
+                                    "featureId": 348,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK|DOB=51001"
+                                },
+                                {
+                                    "featureId": 349,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK"
+                                },
+                                {
+                                    "featureId": 350,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 351,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "KNR|MRK"
+                                },
+                                {
+                                    "featureId": 352,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB.MMYY_HASH=1053"
+                                },
+                                {
+                                    "featureId": 353,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB=51001"
+                                },
+                                {
+                                    "featureId": 354,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|MRK|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 355,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR|DOB.MMDD_HASH=1001"
+                                },
+                                {
+                                    "featureId": 356,
+                                    "featureType": "NAME_KEY",
+                                    "featureValue": "ALNK|KNR"
+                                }
+                            ]
+                        },
+                        "featureScores": {
+                            "DOB": [
+                                {
+                                    "featureType": "DOB",
+                                    "inboundFeature": {
+                                        "featureId": 343,
+                                        "featureType": "DOB",
+                                        "featureValue": "1953-10-01"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 343,
+                                        "featureType": "DOB",
+                                        "featureValue": "1953-10-01"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FMES",
+                                        "frequency": "MANY",
+                                        "exclusive": true,
+                                        "stable": true
+                                    }
+                                }
+                            ],
+                            "NAME": [
+                                {
+                                    "featureType": "NAME",
+                                    "inboundFeature": {
+                                        "featureId": 342,
+                                        "featureType": "NAME",
+                                        "featureValue": "Marika Elonka Canner",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 342,
+                                        "featureType": "NAME",
+                                        "featureValue": "Marika Elonka Canner",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "score": 100,
+                                    "nameScoringDetails": {
+                                        "fullNameScore": 100
+                                    },
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "NAME",
+                                        "frequency": "NAME",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "NATIONALITY": [
+                                {
+                                    "featureType": "NATIONALITY",
+                                    "inboundFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVM",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "RECORD_TYPE": [
+                                {
+                                    "featureType": "RECORD_TYPE",
+                                    "inboundFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVME",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": true,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "WEBSITE": [
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 498,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/5003853505566604686"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 402,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/3276348182001914102"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                },
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 498,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/5003853505566604686"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 344,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/14610541367369986997"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "entities": [
+                {
+                    "resolvedEntity": {
+                        "entityId": 39,
+                        "entityName": "Marika Elonka Canner",
+                        "recordSummaries": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordCount": 3,
+                                "topRecordIds": [
+                                    "16267544270129485655",
+                                    "17472277213181749768",
+                                    "2654689820514522770"
+                                ]
+                            }
+                        ],
+                        "addressData": [
+                            "GB"
+                        ],
+                        "characteristicData": [
+                            "RECORD_TYPE: PERSON",
+                            "DOB: 1953-10-01",
+                            "NATIONALITY: GB"
+                        ],
+                        "identifierData": [
+                            "WEBSITE: https://register.openownership.org/entities/14610541367369986997",
+                            "WEBSITE: https://register.openownership.org/entities/3276348182001914102",
+                            "WEBSITE: https://register.openownership.org/entities/5003853505566604686"
+                        ],
+                        "nameData": [
+                            "PRIMARY: Marika Elonka Canner"
+                        ],
+                        "otherData": [
+                            "FEATURES: PRIMARY",
+                            "FEATURES: 111 Union House, New Union Street, Coventry, CV1 2NT",
+                            "FEATURES: 38c2fa75-f453-445b-8dab-805e8024bf47",
+                            "FEATURES: 3, Mill Hey Road, Wirral, CH48 1ND",
+                            "FEATURES: ab421de0-3dfa-4b85-839e-4b6e1d0b68f3",
+                            "FEATURES: 20, Prenton Way, North Cheshire Trading Estate, Prenton, CH43 3DU",
+                            "FEATURES: fc67855f-60c6-4382-a3e0-26b4e7ed4a85"
+                        ],
+                        "features": {
+                            "ADDRESS": [
+                                {
+                                    "primaryId": 14,
+                                    "primaryValue": "GB",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 14,
+                                            "featureValue": "GB",
+                                            "statistics": {
+                                                "usedForCandidates": false,
+                                                "usedForScoring": true,
+                                                "entityCount": 100,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": true,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "DOB": [
+                                {
+                                    "primaryId": 343,
+                                    "primaryValue": "1953-10-01",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 343,
+                                            "featureValue": "1953-10-01",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": true,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "NAME": [
+                                {
+                                    "primaryId": 342,
+                                    "primaryValue": "Marika Elonka Canner",
+                                    "usageType": "PRIMARY",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 342,
+                                            "featureValue": "Marika Elonka Canner",
+                                            "statistics": {
+                                                "usedForCandidates": false,
+                                                "usedForScoring": true,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "NAME_KEY": [
+                                {
+                                    "primaryId": 356,
+                                    "primaryValue": "ALNK|KNR",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 356,
+                                            "featureValue": "ALNK|KNR",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 355,
+                                    "primaryValue": "ALNK|KNR|DOB.MMDD_HASH=1001",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 355,
+                                            "featureValue": "ALNK|KNR|DOB.MMDD_HASH=1001",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 350,
+                                    "primaryValue": "ALNK|KNR|DOB.MMYY_HASH=1053",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 350,
+                                            "featureValue": "ALNK|KNR|DOB.MMYY_HASH=1053",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 353,
+                                    "primaryValue": "ALNK|KNR|DOB=51001",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 353,
+                                            "featureValue": "ALNK|KNR|DOB=51001",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 349,
+                                    "primaryValue": "ALNK|KNR|MRK",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 349,
+                                            "featureValue": "ALNK|KNR|MRK",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 354,
+                                    "primaryValue": "ALNK|KNR|MRK|DOB.MMDD_HASH=1001",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 354,
+                                            "featureValue": "ALNK|KNR|MRK|DOB.MMDD_HASH=1001",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 352,
+                                    "primaryValue": "ALNK|KNR|MRK|DOB.MMYY_HASH=1053",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 352,
+                                            "featureValue": "ALNK|KNR|MRK|DOB.MMYY_HASH=1053",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 347,
+                                    "primaryValue": "ALNK|KNR|MRK|DOB=51001",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 347,
+                                            "featureValue": "ALNK|KNR|MRK|DOB=51001",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 351,
+                                    "primaryValue": "KNR|MRK",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 351,
+                                            "featureValue": "KNR|MRK",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 345,
+                                    "primaryValue": "KNR|MRK|DOB.MMDD_HASH=1001",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 345,
+                                            "featureValue": "KNR|MRK|DOB.MMDD_HASH=1001",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 346,
+                                    "primaryValue": "KNR|MRK|DOB.MMYY_HASH=1053",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 346,
+                                            "featureValue": "KNR|MRK|DOB.MMYY_HASH=1053",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 348,
+                                    "primaryValue": "KNR|MRK|DOB=51001",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 348,
+                                            "featureValue": "KNR|MRK|DOB=51001",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "NATIONALITY": [
+                                {
+                                    "primaryId": 24,
+                                    "primaryValue": "GB",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 24,
+                                            "featureValue": "GB",
+                                            "statistics": {
+                                                "usedForCandidates": false,
+                                                "usedForScoring": true,
+                                                "entityCount": 34,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "RECORD_TYPE": [
+                                {
+                                    "primaryId": 11,
+                                    "primaryValue": "PERSON",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 11,
+                                            "featureValue": "PERSON",
+                                            "statistics": {
+                                                "usedForCandidates": false,
+                                                "usedForScoring": true,
+                                                "entityCount": 71,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "WEBSITE": [
+                                {
+                                    "primaryId": 344,
+                                    "primaryValue": "https://register.openownership.org/entities/14610541367369986997",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 344,
+                                            "featureValue": "https://register.openownership.org/entities/14610541367369986997",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": true,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 402,
+                                    "primaryValue": "https://register.openownership.org/entities/3276348182001914102",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 402,
+                                            "featureValue": "https://register.openownership.org/entities/3276348182001914102",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": true,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 498,
+                                    "primaryValue": "https://register.openownership.org/entities/5003853505566604686",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 498,
+                                            "featureValue": "https://register.openownership.org/entities/5003853505566604686",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": true,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "records": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "16267544270129485655",
+                                "addressData": [
+                                    "GB"
+                                ],
+                                "characteristicData": [
+                                    "DOB: 1953-10-01",
+                                    "NATIONALITY: GB",
+                                    "RECORD_TYPE: PERSON"
+                                ],
+                                "identifierData": [
+                                    "WEBSITE: https://register.openownership.org/entities/14610541367369986997"
+                                ],
+                                "nameData": [
+                                    "PRIMARY: Marika Elonka Canner"
+                                ],
+                                "otherData": [
+                                    "FEATURES: PRIMARY",
+                                    "FEATURES: 111 Union House, New Union Street, Coventry, CV1 2NT",
+                                    "FEATURES: 38c2fa75-f453-445b-8dab-805e8024bf47"
+                                ],
+                                "originalSourceData": {
+                                    "DATA_SOURCE": "OPEN-OWNERSHIP",
+                                    "RECORD_ID": "16267544270129485655",
+                                    "RECORD_TYPE": "PERSON",
+                                    "FEATURES": [
+                                        {
+                                            "NAME_TYPE": "PRIMARY",
+                                            "NAME_FULL": "Marika Elonka Canner"
+                                        },
+                                        {
+                                            "DATE_OF_BIRTH": "1953-10-01"
+                                        },
+                                        {
+                                            "NATIONALITY": "GB"
+                                        },
+                                        {
+                                            "ADDRESS_TYPE": "PRIMARY",
+                                            "ADDRESS": "111 Union House, New Union Street, Coventry, CV1 2NT",
+                                            "ADDR_COUNTRY": "GB"
+                                        },
+                                        {
+                                            "WEBSITE_ADDRESS": "https://register.openownership.org/entities/14610541367369986997"
+                                        },
+                                        {
+                                            "RANDOM_ID": "38c2fa75-f453-445b-8dab-805e8024bf47"
+                                        }
+                                    ]
+                                },
+                                "lastSeenTimestamp": "2026-05-23T20:32:34.691Z",
+                                "matchLevel": 0
+                            },
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "17472277213181749768",
+                                "addressData": [
+                                    "GB"
+                                ],
+                                "characteristicData": [
+                                    "DOB: 1953-10-01",
+                                    "NATIONALITY: GB",
+                                    "RECORD_TYPE: PERSON"
+                                ],
+                                "identifierData": [
+                                    "WEBSITE: https://register.openownership.org/entities/3276348182001914102"
+                                ],
+                                "nameData": [
+                                    "PRIMARY: Marika Elonka Canner"
+                                ],
+                                "otherData": [
+                                    "FEATURES: PRIMARY",
+                                    "FEATURES: 3, Mill Hey Road, Wirral, CH48 1ND",
+                                    "FEATURES: ab421de0-3dfa-4b85-839e-4b6e1d0b68f3"
+                                ],
+                                "originalSourceData": {
+                                    "DATA_SOURCE": "OPEN-OWNERSHIP",
+                                    "RECORD_ID": "17472277213181749768",
+                                    "RECORD_TYPE": "PERSON",
+                                    "FEATURES": [
+                                        {
+                                            "NAME_TYPE": "PRIMARY",
+                                            "NAME_FULL": "Marika Elonka Canner"
+                                        },
+                                        {
+                                            "DATE_OF_BIRTH": "1953-10-01"
+                                        },
+                                        {
+                                            "NATIONALITY": "GB"
+                                        },
+                                        {
+                                            "ADDRESS_TYPE": "PRIMARY",
+                                            "ADDRESS": "3, Mill Hey Road, Wirral, CH48 1ND",
+                                            "ADDR_COUNTRY": "GB"
+                                        },
+                                        {
+                                            "WEBSITE_ADDRESS": "https://register.openownership.org/entities/3276348182001914102"
+                                        },
+                                        {
+                                            "RANDOM_ID": "ab421de0-3dfa-4b85-839e-4b6e1d0b68f3"
+                                        }
+                                    ]
+                                },
+                                "lastSeenTimestamp": "2026-05-23T20:32:34.739Z",
+                                "matchLevel": 1,
+                                "matchKey": "+NAME+DOB+NATIONALITY",
+                                "resolutionRuleCode": "SNAME_SSTAB"
+                            },
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "2654689820514522770",
+                                "addressData": [
+                                    "GB"
+                                ],
+                                "characteristicData": [
+                                    "DOB: 1953-10-01",
+                                    "NATIONALITY: GB",
+                                    "RECORD_TYPE: PERSON"
+                                ],
+                                "identifierData": [
+                                    "WEBSITE: https://register.openownership.org/entities/5003853505566604686"
+                                ],
+                                "nameData": [
+                                    "PRIMARY: Marika Elonka Canner"
+                                ],
+                                "otherData": [
+                                    "FEATURES: PRIMARY",
+                                    "FEATURES: 20, Prenton Way, North Cheshire Trading Estate, Prenton, CH43 3DU",
+                                    "FEATURES: fc67855f-60c6-4382-a3e0-26b4e7ed4a85"
+                                ],
+                                "originalSourceData": {
+                                    "DATA_SOURCE": "OPEN-OWNERSHIP",
+                                    "RECORD_ID": "2654689820514522770",
+                                    "RECORD_TYPE": "PERSON",
+                                    "FEATURES": [
+                                        {
+                                            "NAME_TYPE": "PRIMARY",
+                                            "NAME_FULL": "Marika Elonka Canner"
+                                        },
+                                        {
+                                            "DATE_OF_BIRTH": "1953-10-01"
+                                        },
+                                        {
+                                            "NATIONALITY": "GB"
+                                        },
+                                        {
+                                            "ADDRESS_TYPE": "PRIMARY",
+                                            "ADDRESS": "20, Prenton Way, North Cheshire Trading Estate, Prenton, CH43 3DU",
+                                            "ADDR_COUNTRY": "GB"
+                                        },
+                                        {
+                                            "WEBSITE_ADDRESS": "https://register.openownership.org/entities/5003853505566604686"
+                                        },
+                                        {
+                                            "RANDOM_ID": "fc67855f-60c6-4382-a3e0-26b4e7ed4a85"
+                                        }
+                                    ]
+                                },
+                                "lastSeenTimestamp": "2026-05-23T20:32:34.790Z",
+                                "matchLevel": 1,
+                                "matchKey": "+NAME+DOB+NATIONALITY",
+                                "resolutionRuleCode": "SNAME_SSTAB"
+                            }
+                        ],
+                        "partial": false,
+                        "lastSeenTimestamp": "2026-05-23T20:32:34.790Z"
+                    }
+                }
+            ]
+        }
+    },
+    "id": "39"
+}

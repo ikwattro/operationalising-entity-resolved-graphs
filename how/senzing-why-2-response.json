@@ -1,0 +1,785 @@
+{
+    "enriched": {
+        "meta": {
+            "server": "Senzing REST API Server",
+            "httpMethod": "GET",
+            "httpStatusCode": 200,
+            "timings": {
+                "overall": 10,
+                "enqueued": 0,
+                "nativeAPI": 4,
+                "nativeAPI:engine.whyEntityByEntityID": 4,
+                "processRawData": 5
+            },
+            "timestamp": "2026-05-24T11:55:03.338Z",
+            "version": "3.5.7-9-dirty",
+            "restApiVersion": "3.4.1",
+            "nativeApiVersion": "3.8.0",
+            "nativeApiBuildVersion": "3.8.0.23303",
+            "nativeApiBuildNumber": "2023_10_30__10_45",
+            "nativeApiBuildDate": "2023-10-30T17:45:00.000Z",
+            "configCompatibilityVersion": "10"
+        },
+        "links": {
+            "self": "http://senzing-api-server:8582/entities/114/why",
+            "openApiSpecification": "http://senzing-api-server:8582/specifications/open-api"
+        },
+        "data": {
+            "whyResults": [
+                {
+                    "perspective": {
+                        "internalId": 114,
+                        "entityId": 114,
+                        "focusRecords": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "10982706004624874287"
+                            },
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "15865669946468696718"
+                            },
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "17992572595506317749"
+                            }
+                        ]
+                    },
+                    "matchInfo": {
+                        "matchLevel": "NO_MATCH"
+                    }
+                }
+            ],
+            "entities": [
+                {
+                    "resolvedEntity": {
+                        "entityId": 114,
+                        "entityName": "A S Kurt Hansen Svendborg",
+                        "recordSummaries": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordCount": 3,
+                                "topRecordIds": [
+                                    "10982706004624874287",
+                                    "15865669946468696718",
+                                    "17992572595506317749"
+                                ]
+                            }
+                        ],
+                        "addressData": [
+                            "DK"
+                        ],
+                        "characteristicData": [
+                            "REGISTRATION_DATE: 2018-10-30",
+                            "RECORD_TYPE: ORGANIZATION"
+                        ],
+                        "identifierData": [
+                            "NATIONAL_ID: 39981963 DK-CVR"
+                        ],
+                        "nameData": [
+                            "PRIMARY: A S Kurt Hansen Svendborg"
+                        ],
+                        "otherData": [
+                            "FEATURES: DK",
+                            "FEATURES: PRIMARY",
+                            "FEATURES: Gotlandsvej 5, Svendborg, 5700",
+                            "FEATURES: 3cfb966a-63c4-4c14-8bd2-1381f3bc84c0",
+                            "FEATURES: 4ac72db7-c22c-4e77-9618-fbc0dce907cc",
+                            "FEATURES: bf0c8b40-926d-4c30-b1a7-da5709163dfe"
+                        ],
+                        "features": {
+                            "ADDRESS": [
+                                {
+                                    "primaryId": 2,
+                                    "primaryValue": "DK",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 2,
+                                            "featureValue": "DK",
+                                            "statistics": {
+                                                "usedForCandidates": false,
+                                                "usedForScoring": true,
+                                                "entityCount": 41,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": true,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "ID_KEY": [
+                                {
+                                    "primaryId": 1779,
+                                    "primaryValue": "NATIONAL_ID=39981963",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1779,
+                                            "featureValue": "NATIONAL_ID=39981963",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "NAME": [
+                                {
+                                    "primaryId": 1755,
+                                    "primaryValue": "A S Kurt Hansen Svendborg",
+                                    "usageType": "PRIMARY",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1755,
+                                            "featureValue": "A S Kurt Hansen Svendborg",
+                                            "statistics": {
+                                                "usedForCandidates": false,
+                                                "usedForScoring": true,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "NAME_KEY": [
+                                {
+                                    "primaryId": 1764,
+                                    "primaryValue": "AS HNSN KRT SFNTBRK",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1764,
+                                            "featureValue": "AS HNSN KRT SFNTBRK",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1765,
+                                    "primaryValue": "AS HNSN KRT SFNTBRK|REGISTRATION_DATE.MMDD_HASH=3010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1765,
+                                            "featureValue": "AS HNSN KRT SFNTBRK|REGISTRATION_DATE.MMDD_HASH=3010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1762,
+                                    "primaryValue": "AS HNSN KRT SFNTBRK|REGISTRATION_DATE.MMYY_HASH=1018",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1762,
+                                            "featureValue": "AS HNSN KRT SFNTBRK|REGISTRATION_DATE.MMYY_HASH=1018",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1776,
+                                    "primaryValue": "AS HNSN KRT SFNTBRK|REGISTRATION_DATE=13010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1776,
+                                            "featureValue": "AS HNSN KRT SFNTBRK|REGISTRATION_DATE=13010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1767,
+                                    "primaryValue": "AS|HNSN|REGISTRATION_DATE.MMDD_HASH=3010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1767,
+                                            "featureValue": "AS|HNSN|REGISTRATION_DATE.MMDD_HASH=3010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1759,
+                                    "primaryValue": "AS|HNSN|REGISTRATION_DATE.MMYY_HASH=1018",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1759,
+                                            "featureValue": "AS|HNSN|REGISTRATION_DATE.MMYY_HASH=1018",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1758,
+                                    "primaryValue": "AS|HNSN|REGISTRATION_DATE=13010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1758,
+                                            "featureValue": "AS|HNSN|REGISTRATION_DATE=13010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1768,
+                                    "primaryValue": "AS|KRT|REGISTRATION_DATE.MMDD_HASH=3010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1768,
+                                            "featureValue": "AS|KRT|REGISTRATION_DATE.MMDD_HASH=3010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1771,
+                                    "primaryValue": "AS|KRT|REGISTRATION_DATE.MMYY_HASH=1018",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1771,
+                                            "featureValue": "AS|KRT|REGISTRATION_DATE.MMYY_HASH=1018",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1761,
+                                    "primaryValue": "AS|KRT|REGISTRATION_DATE=13010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1761,
+                                            "featureValue": "AS|KRT|REGISTRATION_DATE=13010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1773,
+                                    "primaryValue": "AS|SFNTBRK|REGISTRATION_DATE.MMDD_HASH=3010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1773,
+                                            "featureValue": "AS|SFNTBRK|REGISTRATION_DATE.MMDD_HASH=3010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1775,
+                                    "primaryValue": "AS|SFNTBRK|REGISTRATION_DATE.MMYY_HASH=1018",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1775,
+                                            "featureValue": "AS|SFNTBRK|REGISTRATION_DATE.MMYY_HASH=1018",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1777,
+                                    "primaryValue": "AS|SFNTBRK|REGISTRATION_DATE=13010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1777,
+                                            "featureValue": "AS|SFNTBRK|REGISTRATION_DATE=13010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1763,
+                                    "primaryValue": "HNSN|KRT|REGISTRATION_DATE.MMDD_HASH=3010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1763,
+                                            "featureValue": "HNSN|KRT|REGISTRATION_DATE.MMDD_HASH=3010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1774,
+                                    "primaryValue": "HNSN|KRT|REGISTRATION_DATE.MMYY_HASH=1018",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1774,
+                                            "featureValue": "HNSN|KRT|REGISTRATION_DATE.MMYY_HASH=1018",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1772,
+                                    "primaryValue": "HNSN|KRT|REGISTRATION_DATE=13010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1772,
+                                            "featureValue": "HNSN|KRT|REGISTRATION_DATE=13010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1770,
+                                    "primaryValue": "HNSN|SFNTBRK|REGISTRATION_DATE.MMDD_HASH=3010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1770,
+                                            "featureValue": "HNSN|SFNTBRK|REGISTRATION_DATE.MMDD_HASH=3010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1760,
+                                    "primaryValue": "HNSN|SFNTBRK|REGISTRATION_DATE.MMYY_HASH=1018",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1760,
+                                            "featureValue": "HNSN|SFNTBRK|REGISTRATION_DATE.MMYY_HASH=1018",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1778,
+                                    "primaryValue": "HNSN|SFNTBRK|REGISTRATION_DATE=13010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1778,
+                                            "featureValue": "HNSN|SFNTBRK|REGISTRATION_DATE=13010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1766,
+                                    "primaryValue": "KRT|SFNTBRK|REGISTRATION_DATE.MMDD_HASH=3010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1766,
+                                            "featureValue": "KRT|SFNTBRK|REGISTRATION_DATE.MMDD_HASH=3010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1757,
+                                    "primaryValue": "KRT|SFNTBRK|REGISTRATION_DATE.MMYY_HASH=1018",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1757,
+                                            "featureValue": "KRT|SFNTBRK|REGISTRATION_DATE.MMYY_HASH=1018",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "primaryId": 1769,
+                                    "primaryValue": "KRT|SFNTBRK|REGISTRATION_DATE=13010",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1769,
+                                            "featureValue": "KRT|SFNTBRK|REGISTRATION_DATE=13010",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": false,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "NATIONAL_ID": [
+                                {
+                                    "primaryId": 1756,
+                                    "primaryValue": "39981963 DK-CVR",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1756,
+                                            "featureValue": "39981963 DK-CVR",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": true,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "RECORD_TYPE": [
+                                {
+                                    "primaryId": 1597,
+                                    "primaryValue": "ORGANIZATION",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1597,
+                                            "featureValue": "ORGANIZATION",
+                                            "statistics": {
+                                                "usedForCandidates": false,
+                                                "usedForScoring": true,
+                                                "entityCount": 120,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "REGISTRATION_DATE": [
+                                {
+                                    "primaryId": 1780,
+                                    "primaryValue": "2018-10-30",
+                                    "featureDetails": [
+                                        {
+                                            "internalId": 1780,
+                                            "featureValue": "2018-10-30",
+                                            "statistics": {
+                                                "usedForCandidates": true,
+                                                "usedForScoring": true,
+                                                "entityCount": 1,
+                                                "candidateCapReached": false,
+                                                "scoringCapReached": false,
+                                                "suppressed": false
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "records": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "10982706004624874287",
+                                "addressData": [
+                                    "DK"
+                                ],
+                                "characteristicData": [
+                                    "RECORD_TYPE: ORGANIZATION",
+                                    "REGISTRATION_DATE: 2018-10-30"
+                                ],
+                                "identifierData": [
+                                    "NATIONAL_ID: 39981963 DK-CVR"
+                                ],
+                                "nameData": [
+                                    "PRIMARY: A/S Kurt Hansen, Svendborg"
+                                ],
+                                "otherData": [
+                                    "FEATURES: DK",
+                                    "FEATURES: PRIMARY",
+                                    "FEATURES: Gotlandsvej 5, Svendborg, 5700",
+                                    "FEATURES: 3cfb966a-63c4-4c14-8bd2-1381f3bc84c0"
+                                ],
+                                "originalSourceData": {
+                                    "DATA_SOURCE": "OPEN-OWNERSHIP",
+                                    "RECORD_ID": "10982706004624874287",
+                                    "RECORD_TYPE": "ORGANIZATION",
+                                    "FEATURES": [
+                                        {
+                                            "NAME_TYPE": "PRIMARY",
+                                            "NAME_ORG": "A/S Kurt Hansen, Svendborg"
+                                        },
+                                        {
+                                            "NATIONAL_ID_NUMBER": "39981963",
+                                            "NATIONAL_ID_TYPE": "DK-CVR"
+                                        },
+                                        {
+                                            "REGISTRATION_DATE": "2018-10-30"
+                                        },
+                                        {
+                                            "REG_COUNTRY": "DK"
+                                        },
+                                        {
+                                            "ADDRESS_TYPE": "PRIMARY",
+                                            "ADDRESS": "Gotlandsvej 5, Svendborg, 5700",
+                                            "ADDR_COUNTRY": "DK"
+                                        },
+                                        {
+                                            "RANDOM_ID": "3cfb966a-63c4-4c14-8bd2-1381f3bc84c0"
+                                        }
+                                    ]
+                                },
+                                "lastSeenTimestamp": "2026-05-23T21:00:21.568Z",
+                                "matchLevel": 0
+                            },
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "15865669946468696718",
+                                "addressData": [
+                                    "DK"
+                                ],
+                                "characteristicData": [
+                                    "RECORD_TYPE: ORGANIZATION",
+                                    "REGISTRATION_DATE: 2018-10-30"
+                                ],
+                                "identifierData": [
+                                    "NATIONAL_ID: 39981963 DK-CVR"
+                                ],
+                                "nameData": [
+                                    "PRIMARY: A/S Kurt Hansen, Svendborg"
+                                ],
+                                "otherData": [
+                                    "FEATURES: DK",
+                                    "FEATURES: PRIMARY",
+                                    "FEATURES: Gotlandsvej 5, Svendborg, 5700",
+                                    "FEATURES: 4ac72db7-c22c-4e77-9618-fbc0dce907cc"
+                                ],
+                                "originalSourceData": {
+                                    "DATA_SOURCE": "OPEN-OWNERSHIP",
+                                    "RECORD_ID": "15865669946468696718",
+                                    "RECORD_TYPE": "ORGANIZATION",
+                                    "FEATURES": [
+                                        {
+                                            "NAME_TYPE": "PRIMARY",
+                                            "NAME_ORG": "A/S Kurt Hansen, Svendborg"
+                                        },
+                                        {
+                                            "NATIONAL_ID_NUMBER": "39981963",
+                                            "NATIONAL_ID_TYPE": "DK-CVR"
+                                        },
+                                        {
+                                            "REGISTRATION_DATE": "2018-10-30"
+                                        },
+                                        {
+                                            "REG_COUNTRY": "DK"
+                                        },
+                                        {
+                                            "ADDRESS_TYPE": "PRIMARY",
+                                            "ADDRESS": "Gotlandsvej 5, Svendborg, 5700",
+                                            "ADDR_COUNTRY": "DK"
+                                        },
+                                        {
+                                            "RANDOM_ID": "4ac72db7-c22c-4e77-9618-fbc0dce907cc"
+                                        }
+                                    ]
+                                },
+                                "lastSeenTimestamp": "2026-05-23T21:00:22.071Z",
+                                "matchLevel": 0,
+                                "matchKey": "+EXACTLY_SAME"
+                            },
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "17992572595506317749",
+                                "addressData": [
+                                    "DK"
+                                ],
+                                "characteristicData": [
+                                    "RECORD_TYPE: ORGANIZATION",
+                                    "REGISTRATION_DATE: 2018-10-30"
+                                ],
+                                "identifierData": [
+                                    "NATIONAL_ID: 39981963 DK-CVR"
+                                ],
+                                "nameData": [
+                                    "PRIMARY: A/S Kurt Hansen, Svendborg"
+                                ],
+                                "otherData": [
+                                    "FEATURES: DK",
+                                    "FEATURES: PRIMARY",
+                                    "FEATURES: Gotlandsvej 5, Svendborg, 5700",
+                                    "FEATURES: bf0c8b40-926d-4c30-b1a7-da5709163dfe"
+                                ],
+                                "originalSourceData": {
+                                    "DATA_SOURCE": "OPEN-OWNERSHIP",
+                                    "RECORD_ID": "17992572595506317749",
+                                    "RECORD_TYPE": "ORGANIZATION",
+                                    "FEATURES": [
+                                        {
+                                            "NAME_TYPE": "PRIMARY",
+                                            "NAME_ORG": "A/S Kurt Hansen, Svendborg"
+                                        },
+                                        {
+                                            "NATIONAL_ID_NUMBER": "39981963",
+                                            "NATIONAL_ID_TYPE": "DK-CVR"
+                                        },
+                                        {
+                                            "REGISTRATION_DATE": "2018-10-30"
+                                        },
+                                        {
+                                            "REG_COUNTRY": "DK"
+                                        },
+                                        {
+                                            "ADDRESS_TYPE": "PRIMARY",
+                                            "ADDRESS": "Gotlandsvej 5, Svendborg, 5700",
+                                            "ADDR_COUNTRY": "DK"
+                                        },
+                                        {
+                                            "RANDOM_ID": "bf0c8b40-926d-4c30-b1a7-da5709163dfe"
+                                        }
+                                    ]
+                                },
+                                "lastSeenTimestamp": "2026-05-23T21:00:22.248Z",
+                                "matchLevel": 0,
+                                "matchKey": "+EXACTLY_SAME"
+                            }
+                        ],
+                        "partial": false,
+                        "lastSeenTimestamp": "2026-05-23T21:00:22.248Z"
+                    }
+                }
+            ]
+        }
+    },
+    "id": "114"
+}
