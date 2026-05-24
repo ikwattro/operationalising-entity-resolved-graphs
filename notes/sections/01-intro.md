@@ -17,8 +17,8 @@ ER closes that gap. But one-shot ER — dedupe a CSV, eyeball the diff, ship —
 To save us all time on expectation calibration:
 
 - **Not a vendor pitch.** Neither GraphAware nor Senzing is selling from this stage. We will name our products when relevant and not otherwise.
-- **Not a Hume demo, except for one short reveal at the end.** The principles travel; the tooling is one expression of them.
-- **Not a fix-everything-from-the-stage talk.** We will name failure modes openly — Caribbean addresses geocoded to India, Arabic↔English alignment, redo storms — because the only ER content worth listening to does.
+- **Not a product walkthrough.** We run most of this live in Hume because that is where the patterns are most visible. The focus is the methodology.
+- **Not a fix-everything-from-the-stage talk.** We will name failure modes openly.
 
 What this workshop *is*, on the other hand, very much includes a proper walk through how Senzing works. Paco takes the audience through the engine's mechanics in Section 06 — feature extraction, scoring, the resolution decision, the configuration model. Senzing is a great ER engine and the people in this room deserve to leave understanding how it actually does its job, not just what it does for them.
 

@@ -101,6 +101,7 @@ each other; they serve different audiences.
 
 - **Do not invent Senzing behaviour.** If you're unsure how Senzing handles something (redo triggers, idempotence semantics, internal feature weighting), add it to `notes/TODOS.md` under the relevant section, *and* optionally drop a `> [verify with Paco]` blockquote inline at the point in the narrative where the uncertainty bites. Never substitute a hedge for an explanation.
 - **Do not over-engineer.** No custom agents, hooks, or build tooling unless Christophe asks. The repo is prose + small assets.
+- **Do not touch `slides/` unless Christophe explicitly asks.** The default workspace is `notes/sections/`. Never edit `slides/slides.md` or any file under `slides/` as a side-effect of working on notes content.
 
 ## Key references
 
