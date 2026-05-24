@@ -92,7 +92,7 @@ each other; they serve different audiences.
 
 ## Voice and tone
 
-- **First-person plural** — "we push records to Senzing", not "you push records".
+- **First-person plural for presenter actions** — "we walk through", "we are using the min_aml dataset". Use **"you"** when addressing the audience's own practice — "you pay for poor data quality", "you keep both records", "you hand off to Senzing". The notes are the source for slides; the audience reads "you", not "we".
 - **Pragmatic engineer**, not vendor pitch. Concrete examples beat abstractions.
 - **Name failure modes openly**. The GraphAware brand is "we say what breaks". Caribbean street geocoding to India, Arabic↔English alignment edge cases, redo storms — these are the stories worth telling.
 - **Senzing is a partner, and a great ER engine**. The workshop is explicitly here to explain how it works — Paco leads the deep dive in Section 06. Do *not* describe Senzing as a "black box", "something we operate but do not understand", or anything else that hedges on the explanation. When in doubt about a specific internal, mark `> [verify with Paco]` and let Paco fill in — never substitute a hedge for an explanation.

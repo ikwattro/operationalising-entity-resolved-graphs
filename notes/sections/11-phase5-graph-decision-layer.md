@@ -88,7 +88,6 @@ The general posture: *signal* runs across sources because that is where signal l
 We are honest about what can go wrong:
 
 - **Over-trusting embedding similarity.** Face embeddings, address embeddings, name embeddings — all useful, all noisier than they look. Thresholds drift with population and with the embedding model. Calibration is per-deployment and revisited.
-- **Feedback drift.** If the decision layer keeps writing trust IDs to correct the same Senzing behaviour, and we never tune the engine's configuration, the system becomes dependent on the override. The trust-ID log is itself a signal for Senzing config tuning. We review it.
 - **Audit pressure.** Every trust-ID write is a decision. The `OverrideDecision` node is not optional — it is what an investigator or regulator will ask for first.
 - **Loops.** A trust-ID change updates the graph, which may surface new candidates. Idempotence helps — same evidence, same trust ID — but we still cap cycle depth as a safety net.
 

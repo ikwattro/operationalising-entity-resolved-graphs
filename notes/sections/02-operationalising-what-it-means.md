@@ -2,7 +2,7 @@
 
 ## Narrative
 
-We chose the word *operationalising* in the title on purpose. The word does the heavy lifting; this section unpacks it.
+We chose the word *operationalising* in the title on purpose.
 
 In a demo, ER decides once. We dedupe a CSV, eyeball the diff, ship. Done. In production, ER decides continuously, and its decisions change as new evidence arrives. A record that landed last week may belong to a different entity today because a record from a different source corroborated or contradicted it. The graph has to stay consistent. Analysts have to be able to explain a merge they made six months ago to a regulator looking at it for the first time today. Downstream systems have to know which entities changed without re-reading everything. None of those things are demos.
 
@@ -17,7 +17,7 @@ Everything else in the workshop — the phases, the architecture, the trust-ID m
 
 ### What operationalising is *not*
 
-Worth ruling out, because the word is heavy and people pour their own meanings into it:
+Worth ruling out:
 
 - It is not "running ER in production" in the trivial sense of "we have a server up". A cron job that re-resolves a table every night is in production and is not operationalised.
 - It is not "ER with monitoring bolted on". Observability has to be a property of the model, not a layer on the side.
@@ -34,10 +34,10 @@ That is the map. We will hold up the architecture diagram next and show the comp
 
 ## Speaker notes
 
-- The four properties are the spine of the workshop. Say them once here clearly, then forward-reference them at every phase. Audience members who lose the thread can always re-anchor on the four.
-- Do not rank the four. They are not "what's most important". They are properties the system must have, and all four have to hold.
-- This is the section that makes "operationalising" stop being a word in a title and start being a checklist. Read the four with a beat in between.
-- Avoid the word "robust" — it's a vendor-pitch tell. Say what we mean: idempotent, observable, explainable, near real-time.
+- State the four properties once, clearly. Forward-reference them at every phase — they are the anchor the audience comes back to.
+- Do not rank them. All four have to hold. That is the point.
+- Pause between each of the four when reading them out.
+- Avoid "robust" — say what we mean: idempotent, observable, explainable, near real-time.
 
 ## Assets
 

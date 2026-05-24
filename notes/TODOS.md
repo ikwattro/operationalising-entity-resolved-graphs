@@ -88,6 +88,7 @@ Note: the section files still carry **inline narrative hedges** of the form `> [
 - [ ] **Paco:** How exactly to configure Senzing so a `TRUST_ID` feature on a record drives merge/split behaviour. We want canonical configuration on stage.
 - [ ] **Paco:** Whether Senzing has a built-in "trust ID" concept, or whether we are using a generic strong-identifier feature for the purpose. The mechanism works either way; the language on stage depends on which.
 - [ ] **Christophe:** Thresholds for the automatic categories (face-embedding similarity, co-occurrence weight). Currently "calibrate per deployment". A starting point would be more actionable.
+- [ ] **Paco:** Whether the trust-ID log (pattern of overrides correcting the same engine behaviour repeatedly) is a meaningful signal for Senzing config tuning in practice — and if so, how. Removed a "feedback drift" risk bullet from the section because we were not confident enough to state it. Either Paco confirms and we restore it, or it stays out.
 - [ ] **Christophe:** Which engagements / examples are redactable enough to show on stage. The `OWNS` and `FATHER_OF` examples should ideally be real.
 - [ ] **Christophe:** Whether to introduce an `:OverrideDecision` node in the graph model now, or treat it as part of the audit-history hypothetical from Section 10.
 

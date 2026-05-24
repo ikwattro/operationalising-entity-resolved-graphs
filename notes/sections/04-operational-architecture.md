@@ -47,7 +47,7 @@ We will walk this loop in six phases. Each phase highlights a region of the diag
 | Phase | Highlights | What we cover                                                          |
 | ----- | ---------- | ---------------------------------------------------------------------- |
 | 1     | `SRC → DQ → GIN` | Data arrives, gets cleaned, lands in the graph exploded but disconnected |
-| 2     | `GIN → SZ → GOUT` | Records leave the graph for Senzing; resolved entities come back        |
+| 2     | `GIN → SZ → GOUT` | Graph nodes and their neighbourhood are mapped to Senzing-compliant feature JSON and pushed; resolved entities come back as affected-entity events that update the graph |
 | 3     | `GOUT` (over time) | The same nodes change as new evidence lands — growth, merge, split    |
 | 4     | `GOUT → AUDIT` | Everything the graph does has to be explainable and observable         |
 | 5     | `HEUR ⇢ GIN` (dotted edge) | The graph tells Senzing what it cannot see, via trust-ID record updates |
@@ -63,6 +63,8 @@ So the rest of the workshop reads clean:
 - **Senzing is the source of truth for resolution.** Even when the graph generates an override in Phase 5, the override does not mutate the graph directly — it goes back through Senzing, expressed as a trust-ID update on records, and the resulting resolution change comes back the same way any other resolution change would. The graph never quietly disagrees with the engine.
 
 These two rules are why the architecture has the shape it has. Hold them as you watch the phases.
+
+- **The `GIN → SZ` arrow implies a mapping step.** A node in the graph is not a Senzing record. Turning one into the other is an explicit engineering task: node properties flatten to scalar feature fields (`NAME_FULL`, `DATE_OF_BIRTH`, `PASSPORT_NUMBER`), and the node's neighbourhood shape contributes too — aliases modelled as separate connected nodes become additional `NAME_TYPE: ALIAS` entries; organisational relationships become `GROUP_ASSOCIATION` features; `RELATIONSHIPS[]` pointers carry the inter-entity network Senzing needs to reason across. Getting this mapping right — and keeping it maintained as the graph schema evolves — is one of the places the operational architecture can quietly fail. Section 07 walks the mapping code in detail.
 
 ## Speaker notes
 

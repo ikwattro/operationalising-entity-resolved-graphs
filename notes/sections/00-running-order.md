@@ -18,7 +18,7 @@ It is not a script. It is a budget.
 | 05  | Phase 1 — Data In, Exploded, Disconnected                     | 6       | 38         |
 | 06  | Phase 2 — Senzing Fundamentals (Paco's deep dive)             | 14      | 52         |
 | 07  | Phase 2 — From Graph Records to Senzing                       | 11      | 63         |
-| 08  | What Is OOTB in Senzing — Geocoding and Globalisation         | 6       | 69         |
+| 08  | The Depth of the Engine — What You'd Never Build Yourself     | 6       | 69         |
 | —   | **Audience pause** — 3 questions from the floor              | 5       | 74         |
 | 09  | Phase 3 — A Living Architecture (growth, merge, split)        | 10      | 84         |
 | 10  | Phase 4 — Explainability, Observability, Audit History        | 9       | 93         |
@@ -59,7 +59,7 @@ The transitions matter more than the slide bullets. Land each handoff cleanly an
 - **05 → 06.** "The graph holds the records. The engine resolves them. Time for Paco to tell us what the engine actually does."
 - **06 → 07.** "Now we know what Senzing does. Next: how the records actually get from the graph into Senzing, and what comes back."
 - **07 → 08.** "Before we leave Phase 2 — there are things Senzing handles for us out of the box that we should not duplicate upstream. Geocoding and globalisation are the two big ones."
-- **08 → pause.** "That is Senzing as a system. The next half of the workshop is what we build around it. Three questions before we go on."
+- **08 → pause.** "That is what's inside the engine. The next half of the workshop is what we build around it. Three questions before we go on."
 - **pause → 09.** Use a clean question as the bridge — "we said Senzing is idempotent. Phase 3 is what that buys us when the data starts moving."
 - **09 → 10.** "Living architecture is the engine of change. Phase 4 is how we make that change explainable and observable."
 - **10 → 11.** "Phase 4 was about *seeing* what the engine did. Phase 5 is about telling the engine what *we* see that it cannot." — frames the decision layer as the symmetric override.
