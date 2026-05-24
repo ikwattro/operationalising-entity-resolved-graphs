@@ -89,14 +89,18 @@ See `slides/README.md` for full instructions.
 
 ### Graph before entity resolution — disconnected records
 
-![min_aml before resolution](screenshots/min_aml_not_resolved.png)
+![min_aml before resolution](./screenshots/min_aml_not_resolved.png)
 
 ### After resolution — entities merged
 
-![min_aml resolved, view 1](screenshots/min_aml_resolved_1.png)
+![min_aml resolved, view 1](./screenshots/min_aml_resolved_1.png)
 
-![min_aml resolved, view 2](screenshots/min_aml_resolved_2.png)
+![min_aml resolved, view 2](./screenshots/min_aml_resolved_2.png)
 
 ### Senzing WHY explanation in Hume
 
-![Senzing WHY panel in Hume](screenshots/min_aml_senzing_why.png)
+![Senzing WHY panel in Hume](./screenshots/min_aml_senzing_why.png)
+
+### Senzing Pipeline
+
+![Hume Orchestra Senzing Pipeline](./screenshots/hume-orchestra-senzing-pipeline.png)
