@@ -1,0 +1,432 @@
+{
+    "enriched": {
+        "meta": {
+            "server": "Senzing REST API Server",
+            "httpMethod": "GET",
+            "httpStatusCode": 200,
+            "timings": {
+                "overall": 52,
+                "enqueued": 16,
+                "nativeAPI": 15,
+                "nativeAPI:engine.howEntityByEntityID": 15,
+                "processRawData": 11
+            },
+            "timestamp": "2026-05-23T21:32:20.377Z",
+            "version": "3.5.7-9-dirty",
+            "restApiVersion": "3.4.1",
+            "nativeApiVersion": "3.8.0",
+            "nativeApiBuildVersion": "3.8.0.23303",
+            "nativeApiBuildNumber": "2023_10_30__10_45",
+            "nativeApiBuildDate": "2023-10-30T17:45:00.000Z",
+            "configCompatibilityVersion": "10"
+        },
+        "links": {
+            "self": "http://senzing-api-server:8582/entities/3/how",
+            "openApiSpecification": "http://senzing-api-server:8582/specifications/open-api"
+        },
+        "data": {
+            "finalStates": [
+                {
+                    "virtualEntityId": "V253-S2",
+                    "records": [
+                        {
+                            "dataSource": "OPEN-OWNERSHIP",
+                            "recordId": "10390699576067371333",
+                            "internalId": 253
+                        },
+                        {
+                            "dataSource": "OPEN-OWNERSHIP",
+                            "recordId": "12469744678402514041",
+                            "internalId": 254
+                        },
+                        {
+                            "dataSource": "OPEN-OWNERSHIP",
+                            "recordId": "2882148492357797361",
+                            "internalId": 255
+                        }
+                    ],
+                    "singleton": false
+                }
+            ],
+            "resolutionSteps": {
+                "V253-S1": {
+                    "stepNumber": 1,
+                    "inboundVirtualEntity": {
+                        "virtualEntityId": "V255",
+                        "records": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "2882148492357797361",
+                                "internalId": 255
+                            }
+                        ],
+                        "singleton": true
+                    },
+                    "candidateVirtualEntity": {
+                        "virtualEntityId": "V253",
+                        "records": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "10390699576067371333",
+                                "internalId": 253
+                            }
+                        ],
+                        "singleton": true
+                    },
+                    "matchInfo": {
+                        "matchKey": "+NAME+DOB+TRUSTED_ID+NATIONALITY",
+                        "resolutionRule": "SAME_A1",
+                        "featureScores": {
+                            "DOB": [
+                                {
+                                    "featureType": "DOB",
+                                    "inboundFeature": {
+                                        "featureId": 26,
+                                        "featureType": "DOB",
+                                        "featureValue": "1986-03-01"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 26,
+                                        "featureType": "DOB",
+                                        "featureValue": "1986-03-01"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FMES",
+                                        "frequency": "MANY",
+                                        "exclusive": true,
+                                        "stable": true
+                                    }
+                                }
+                            ],
+                            "NAME": [
+                                {
+                                    "featureType": "NAME",
+                                    "inboundFeature": {
+                                        "featureId": 507,
+                                        "featureType": "NAME",
+                                        "featureValue": "Wyndham Plumptre",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 25,
+                                        "featureType": "NAME",
+                                        "featureValue": "Wyndham James Alexander Plumptre",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "score": 88,
+                                    "nameScoringDetails": {
+                                        "fullNameScore": 88
+                                    },
+                                    "scoringBucket": "CLOSE",
+                                    "scoringBehavior": {
+                                        "code": "NAME",
+                                        "frequency": "NAME",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "NATIONALITY": [
+                                {
+                                    "featureType": "NATIONALITY",
+                                    "inboundFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVM",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "RECORD_TYPE": [
+                                {
+                                    "featureType": "RECORD_TYPE",
+                                    "inboundFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVME",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": true,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "TRUSTED_ID": [
+                                {
+                                    "featureType": "TRUSTED_ID",
+                                    "inboundFeature": {
+                                        "featureId": 3632,
+                                        "featureType": "TRUSTED_ID",
+                                        "featureValue": "8da468ea-510f-49d5-92c5-4baf3f7b84e0 MANUAL_MERGE"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 3632,
+                                        "featureType": "TRUSTED_ID",
+                                        "featureValue": "8da468ea-510f-49d5-92c5-4baf3f7b84e0 MANUAL_MERGE"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "A1ES",
+                                        "frequency": "ALWAYS_ONE",
+                                        "exclusive": true,
+                                        "stable": true
+                                    }
+                                }
+                            ],
+                            "WEBSITE": [
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 508,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/1639249953628126575"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 27,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/383105437706033128"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "resolvedVirtualEntityId": "V253-S1"
+                },
+                "V253-S2": {
+                    "stepNumber": 2,
+                    "inboundVirtualEntity": {
+                        "virtualEntityId": "V253-S1",
+                        "records": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "10390699576067371333",
+                                "internalId": 253
+                            },
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "2882148492357797361",
+                                "internalId": 255
+                            }
+                        ],
+                        "singleton": false
+                    },
+                    "candidateVirtualEntity": {
+                        "virtualEntityId": "V254",
+                        "records": [
+                            {
+                                "dataSource": "OPEN-OWNERSHIP",
+                                "recordId": "12469744678402514041",
+                                "internalId": 254
+                            }
+                        ],
+                        "singleton": true
+                    },
+                    "matchInfo": {
+                        "matchKey": "+NAME+DOB+TRUSTED_ID+NATIONALITY",
+                        "resolutionRule": "SAME_A1",
+                        "featureScores": {
+                            "DOB": [
+                                {
+                                    "featureType": "DOB",
+                                    "inboundFeature": {
+                                        "featureId": 26,
+                                        "featureType": "DOB",
+                                        "featureValue": "1986-03-01"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 26,
+                                        "featureType": "DOB",
+                                        "featureValue": "1986-03-01"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FMES",
+                                        "frequency": "MANY",
+                                        "exclusive": true,
+                                        "stable": true
+                                    }
+                                }
+                            ],
+                            "NAME": [
+                                {
+                                    "featureType": "NAME",
+                                    "inboundFeature": {
+                                        "featureId": 25,
+                                        "featureType": "NAME",
+                                        "featureValue": "Wyndham James Alexander Plumptre",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 25,
+                                        "featureType": "NAME",
+                                        "featureValue": "Wyndham James Alexander Plumptre",
+                                        "usageType": "PRIMARY"
+                                    },
+                                    "score": 100,
+                                    "nameScoringDetails": {
+                                        "fullNameScore": 100
+                                    },
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "NAME",
+                                        "frequency": "NAME",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "NATIONALITY": [
+                                {
+                                    "featureType": "NATIONALITY",
+                                    "inboundFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 24,
+                                        "featureType": "NATIONALITY",
+                                        "featureValue": "GB"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVM",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "RECORD_TYPE": [
+                                {
+                                    "featureType": "RECORD_TYPE",
+                                    "inboundFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 11,
+                                        "featureType": "RECORD_TYPE",
+                                        "featureValue": "PERSON"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "FVME",
+                                        "frequency": "VERY_MANY",
+                                        "exclusive": true,
+                                        "stable": false
+                                    }
+                                }
+                            ],
+                            "TRUSTED_ID": [
+                                {
+                                    "featureType": "TRUSTED_ID",
+                                    "inboundFeature": {
+                                        "featureId": 3632,
+                                        "featureType": "TRUSTED_ID",
+                                        "featureValue": "8da468ea-510f-49d5-92c5-4baf3f7b84e0 MANUAL_MERGE"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 3632,
+                                        "featureType": "TRUSTED_ID",
+                                        "featureValue": "8da468ea-510f-49d5-92c5-4baf3f7b84e0 MANUAL_MERGE"
+                                    },
+                                    "score": 100,
+                                    "scoringBucket": "SAME",
+                                    "scoringBehavior": {
+                                        "code": "A1ES",
+                                        "frequency": "ALWAYS_ONE",
+                                        "exclusive": true,
+                                        "stable": true
+                                    }
+                                }
+                            ],
+                            "WEBSITE": [
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 508,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/1639249953628126575"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 248,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/15895600672142605210"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                },
+                                {
+                                    "featureType": "WEBSITE",
+                                    "inboundFeature": {
+                                        "featureId": 27,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/383105437706033128"
+                                    },
+                                    "candidateFeature": {
+                                        "featureId": 248,
+                                        "featureType": "WEBSITE",
+                                        "featureValue": "https://register.openownership.org/entities/15895600672142605210"
+                                    },
+                                    "score": 0,
+                                    "scoringBucket": "NO_CHANCE",
+                                    "scoringBehavior": {
+                                        "code": "FF",
+                                        "frequency": "FEW",
+                                        "exclusive": false,
+                                        "stable": false
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "resolvedVirtualEntityId": "V253-S2"
+                }
+            }
+        }
+    },
+    "id": "3"
+}

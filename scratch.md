@@ -6,7 +6,9 @@
 - Best ER is the one you don't need
     - Show raw data
     - Explain importance of dq techniques
+        - normalization, enrichment with dicts, suffix/prefix expansion etc...
     - Show after
+    - be inspired from the data in take2/assets/data/companies_raw/normalised
 - Operational architecture
     - components:
         - data

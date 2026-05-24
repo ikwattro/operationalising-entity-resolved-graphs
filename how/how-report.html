@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entity Resolution — How Report</title>
+  <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  padding: 2rem 1rem;
+  line-height: 1.5;
+}
+
+.container { max-width: 960px; margin: 0 auto; }
+
+h1 { font-size: 1.75rem; font-weight: 700; color: #0f172a; }
+h2 { font-size: 1.2rem; font-weight: 600; color: #334155; margin: 2rem 0 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.subtitle {
+  color: #64748b;
+  margin: 0.35rem 0 1.5rem;
+  font-size: 1rem;
+}
+
+/* ── Final state ── */
+.final-box {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #6366f1;
+  border-radius: 10px;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.final-label { font-weight: 600; color: #6366f1; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.final-count { font-weight: 600; color: #0f172a; background: #e0e7ff; padding: 0.2rem 0.65rem; border-radius: 20px; font-size: 0.88rem; }
+.final-records { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+/* ── Record badges ── */
+.record-badge {
+  display: inline-block;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #334155;
+  white-space: nowrap;
+}
+
+/* ── Step card ── */
+.step-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.85rem 1.4rem;
+}
+.step-number {
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: #0f172a;
+  color: #fff;
+  padding: 0.2rem 0.75rem;
+  border-radius: 20px;
+}
+.step-rule {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+.step-rule code {
+  background: #e2e8f0;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+  color: #334155;
+}
+
+/* ── Entities merge row ── */
+.entities-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.4rem;
+  background: #fafafa;
+  border-bottom: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+}
+.entity-box {
+  flex: 1;
+  min-width: 180px;
+}
+.entity-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+  margin-bottom: 0.4rem;
+}
+.entity-records { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+.merge-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+.match-key {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: #6366f1;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+}
+.arrow {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ── Feature table ── */
+.feature-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.feature-table thead tr {
+  background: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+}
+.feature-table th {
+  padding: 0.6rem 1rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+.feature-table th.match-col { text-align: center; }
+
+.feature-table td {
+  padding: 0.6rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid #f1f5f9;
+}
+.feature-table td.match-col { text-align: center; }
+.feature-table td.value {
+  font-size: 0.85rem;
+  color: #334155;
+  max-width: 240px;
+  word-break: break-word;
+}
+.feature-table td.feature-name {
+  font-weight: 500;
+  white-space: nowrap;
+  color: #0f172a;
+}
+
+.contributed { background: #fff; }
+.not-contributed { background: #fafafa; opacity: 0.7; }
+.not-contributed td.feature-name { color: #94a3b8; }
+.not-contributed td.value { color: #94a3b8; }
+
+.key-icon { font-size: 0.8rem; margin-right: 0.2rem; }
+.key-icon.muted { color: #cbd5e1; }
+.contributed .key-icon { color: #15803d; }
+
+/* ── Score bar ── */
+.score-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-bottom: 0.3rem;
+}
+.score-bar {
+  height: 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.score-num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475569;
+  min-width: 2.5em;
+  text-align: left;
+}
+
+/* ── Bucket badge ── */
+.bucket-badge {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid;
+  white-space: nowrap;
+}
+
+.legend-note {
+  padding: 0.55rem 1.4rem;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  background: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>How was this entity resolved?</h1>
+    <p class="subtitle">
+      3 records were merged together in 2 steps.
+    </p>
+
+    <div class='final-box'><span class='final-label'>Resolved entity</span><span class='final-count'>3 records merged</span><div class='final-records'><span class='record-badge'>OPEN-OWNERSHIP <strong>#253</strong></span><span class='record-badge'>OPEN-OWNERSHIP <strong>#254</strong></span><span class='record-badge'>OPEN-OWNERSHIP <strong>#255</strong></span></div></div>
+
+    <h2>Resolution steps</h2>
+    
+<div class='step-card'>
+  <div class='step-header'>
+    <span class='step-number'>Step 1</span>
+    <span class='step-rule'>Resolution rule: <code>SAME_A1</code></span>
+  </div>
+  <div class='entities-row'>
+    <div class='entity-box'>
+      <div class='entity-label'>Record</div>
+      <div class='entity-records'><span class='record-badge'>OPEN-OWNERSHIP <strong>#255</strong></span></div>
+    </div>
+    <div class='merge-arrow'>
+      <div class='match-key'>+NAME+DOB+TRUSTED_ID+NATIONALITY</div>
+      <div class='arrow'>&#8594; merged with &#8594;</div>
+    </div>
+    <div class='entity-box'>
+      <div class='entity-label'>Record</div>
+      <div class='entity-records'><span class='record-badge'>OPEN-OWNERSHIP <strong>#253</strong></span></div>
+    </div>
+  </div>
+  <table class='feature-table'>
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Left side</th>
+        <th class='match-col'>Match quality</th>
+        <th>Right side</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class='contributed'><td class='feature-name'><span class='key-icon'>✓</span> Date of Birth</td><td class='value'>1986-03-01</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:100px;max-width:80px;min-width:4px;background:#15803d'></div><span class='score-num'>100/100</span></div><span class='bucket-badge' style='background:#dcfce7;color:#15803d;border-color:#86efac'>Exact Match</span></td><td class='value'>1986-03-01</td></tr><tr class='contributed'><td class='feature-name'><span class='key-icon'>✓</span> Name</td><td class='value'>Wyndham Plumptre</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:88px;max-width:80px;min-width:4px;background:#4d7c0f'></div><span class='score-num'>88/100</span></div><span class='bucket-badge' style='background:#ecfccb;color:#4d7c0f;border-color:#bef264'>Close Match</span></td><td class='value'>Wyndham James Alexander Plumptre</td></tr><tr class='contributed'><td class='feature-name'><span class='key-icon'>✓</span> Nationality</td><td class='value'>GB</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:100px;max-width:80px;min-width:4px;background:#15803d'></div><span class='score-num'>100/100</span></div><span class='bucket-badge' style='background:#dcfce7;color:#15803d;border-color:#86efac'>Exact Match</span></td><td class='value'>GB</td></tr><tr class='contributed'><td class='feature-name'><span class='key-icon'>✓</span> Trusted ID</td><td class='value'>8da468ea-510f-49d5-92c5-4baf3f7b84e0 MANUAL_MERGE</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:100px;max-width:80px;min-width:4px;background:#15803d'></div><span class='score-num'>100/100</span></div><span class='bucket-badge' style='background:#dcfce7;color:#15803d;border-color:#86efac'>Exact Match</span></td><td class='value'>8da468ea-510f-49d5-92c5-4baf3f7b84e0 MANUAL_MERGE</td></tr><tr class='not-contributed'><td class='feature-name'><span class='key-icon muted'>–</span> Website</td><td class='value'>https://register.openownership.org/entities/1639249953628126575</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:4px;max-width:80px;min-width:4px;background:#475569'></div><span class='score-num'>0/100</span></div><span class='bucket-badge' style='background:#f1f5f9;color:#475569;border-color:#cbd5e1'>No Match</span></td><td class='value'>https://register.openownership.org/entities/383105437706033128</td></tr>
+    </tbody>
+  </table>
+  <p class='legend-note'>✓ Drove this merge &nbsp;·&nbsp; – Compared but did not contribute</p>
+</div>
+
+<div class='step-card'>
+  <div class='step-header'>
+    <span class='step-number'>Step 2</span>
+    <span class='step-rule'>Resolution rule: <code>SAME_A1</code></span>
+  </div>
+  <div class='entities-row'>
+    <div class='entity-box'>
+      <div class='entity-label'>Group of records</div>
+      <div class='entity-records'><span class='record-badge'>OPEN-OWNERSHIP <strong>#253</strong></span><span class='record-badge'>OPEN-OWNERSHIP <strong>#255</strong></span></div>
+    </div>
+    <div class='merge-arrow'>
+      <div class='match-key'>+NAME+DOB+TRUSTED_ID+NATIONALITY</div>
+      <div class='arrow'>&#8594; merged with &#8594;</div>
+    </div>
+    <div class='entity-box'>
+      <div class='entity-label'>Record</div>
+      <div class='entity-records'><span class='record-badge'>OPEN-OWNERSHIP <strong>#254</strong></span></div>
+    </div>
+  </div>
+  <table class='feature-table'>
+    <thead>
+      <tr>
+        <th>Feature</th>
+        <th>Left side</th>
+        <th class='match-col'>Match quality</th>
+        <th>Right side</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class='contributed'><td class='feature-name'><span class='key-icon'>✓</span> Date of Birth</td><td class='value'>1986-03-01</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:100px;max-width:80px;min-width:4px;background:#15803d'></div><span class='score-num'>100/100</span></div><span class='bucket-badge' style='background:#dcfce7;color:#15803d;border-color:#86efac'>Exact Match</span></td><td class='value'>1986-03-01</td></tr><tr class='contributed'><td class='feature-name'><span class='key-icon'>✓</span> Name</td><td class='value'>Wyndham James Alexander Plumptre</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:100px;max-width:80px;min-width:4px;background:#15803d'></div><span class='score-num'>100/100</span></div><span class='bucket-badge' style='background:#dcfce7;color:#15803d;border-color:#86efac'>Exact Match</span></td><td class='value'>Wyndham James Alexander Plumptre</td></tr><tr class='contributed'><td class='feature-name'><span class='key-icon'>✓</span> Nationality</td><td class='value'>GB</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:100px;max-width:80px;min-width:4px;background:#15803d'></div><span class='score-num'>100/100</span></div><span class='bucket-badge' style='background:#dcfce7;color:#15803d;border-color:#86efac'>Exact Match</span></td><td class='value'>GB</td></tr><tr class='contributed'><td class='feature-name'><span class='key-icon'>✓</span> Trusted ID</td><td class='value'>8da468ea-510f-49d5-92c5-4baf3f7b84e0 MANUAL_MERGE</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:100px;max-width:80px;min-width:4px;background:#15803d'></div><span class='score-num'>100/100</span></div><span class='bucket-badge' style='background:#dcfce7;color:#15803d;border-color:#86efac'>Exact Match</span></td><td class='value'>8da468ea-510f-49d5-92c5-4baf3f7b84e0 MANUAL_MERGE</td></tr><tr class='not-contributed'><td class='feature-name'><span class='key-icon muted'>–</span> Website</td><td class='value'>https://register.openownership.org/entities/1639249953628126575</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:4px;max-width:80px;min-width:4px;background:#475569'></div><span class='score-num'>0/100</span></div><span class='bucket-badge' style='background:#f1f5f9;color:#475569;border-color:#cbd5e1'>No Match</span></td><td class='value'>https://register.openownership.org/entities/15895600672142605210</td></tr><tr class='not-contributed'><td class='feature-name'><span class='key-icon muted'>–</span> Website</td><td class='value'>https://register.openownership.org/entities/383105437706033128</td><td class='match-col'><div class='score-bar-wrap'><div class='score-bar' style='width:4px;max-width:80px;min-width:4px;background:#475569'></div><span class='score-num'>0/100</span></div><span class='bucket-badge' style='background:#f1f5f9;color:#475569;border-color:#cbd5e1'>No Match</span></td><td class='value'>https://register.openownership.org/entities/15895600672142605210</td></tr>
+    </tbody>
+  </table>
+  <p class='legend-note'>✓ Drove this merge &nbsp;·&nbsp; – Compared but did not contribute</p>
+</div>
+
+  </div>
+</body>
+</html>
