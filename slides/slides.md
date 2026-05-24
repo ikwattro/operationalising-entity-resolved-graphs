@@ -41,10 +41,10 @@ Bridge Meetup 2026
 
 - Neither GraphAware nor Senzing is selling from this stage
 - We will name our products when relevant and stop there
-- **Not a Hume demo** — one short reveal at the end
+- **Not a product walkthrough** — we run this in Hume because that is where the patterns are most visible; the methodology is the focus
 - **Not a fix-everything-from-stage talk** — failure modes named openly
 
-What it is: an end-to-end walk through **operationalising** ER, in six phases, with a map you can navigate.
+What it is: an end-to-end walk through **operationalising** ER, in six phases, with a map you can navigate. Including a proper explanation of how Senzing works — Paco takes the engine's mechanics in Section 06.
 
 ---
 
@@ -67,28 +67,24 @@ Registers a shell company as a **third spelling** in our corporate registry feed
 
 That gap *is* the business model — fraud, AML evasion, sanctions, account-takeover rings. ER closes it.
 
----
+<!-- 
+Open cold with this. Do NOT start with "today we'll cover...".
+Start with the criminal. The story sets the tone for the whole workshop.
+Christophe introduces Paco with a real credential ("years hardening this engine on financial-crime data"), not just "from Senzing". Paco: same favour back.
+Hard time discipline — 5 minutes total for this section. Clock starts when the room sits down.
+-->
 
-<!-- _class: img-right -->
+---
 
 ## GraphAware + Senzing: two halves
 
-<div class="columns">
-<div class="col-content">
+**GraphAware** builds graph-powered investigation software — Hume — and operationalises large connected-data systems for financial-crime and intelligence use cases. Christophe is GraphAware's CTO.
 
-**GraphAware** — graph-powered investigation software (Hume), connected-data operationalisation.
+**Senzing** is the production entity resolution engine the financial-crime and trust-and-safety world reaches for first — configurable, deterministic, hardened on real-world data variation at scale. Paco is from Senzing.
 
-**Senzing** — production entity resolution engine, financial-crime and trust-and-safety deployments at scale.
+Not competitors. Two halves of the same picture.
 
-Not competitors. Two halves of the same picture — the next two hours are how they fit together in production.
-
-</div>
-<div class="col-img">
-
-![GraphAware and Senzing partnership — two puzzle pieces fitting together](https://picsum.photos/seed/ga-senzing-partnership/600/800)
-
-</div>
-</div>
+The next two hours are about how those halves fit together in production.
 
 ---
 
@@ -131,6 +127,13 @@ The graph has to stay consistent. Analysts need to explain a merge made six mont
 
 We will return to these four at every phase. They are the checklist.
 
+<!-- 
+State these once, clearly. Do not rank them — all four have to hold simultaneously.
+Pause between each one when reading aloud.
+Avoid "robust" — say what you mean: idempotent, observable, explainable, near real-time.
+Forward-reference: "We will hold up the architecture diagram next and show the components those properties live in."
+-->
+
 ---
 
 ## What operationalising is NOT
@@ -161,17 +164,25 @@ We will return to these four at every phase. They are the checklist.
 
 ## The slogan
 
-> **The best ER is the one we did not need to run, because we did the work upstream.**
+> **The best ER is the one you did not need to run — not because you bought good tooling, but because you understood your data and did the work.**
 
-Everything we still reach ER for is then a genuinely hard call — exactly the work we want Senzing doing.
+If you align correctly, duplicates collapse on a dedup hash and Senzing has nothing left to do. No ER needed. That is not a failure mode — that is the goal.
+
+What you still reach ER for after that is a genuinely hard problem: incomplete evidence, cross-source ambiguity, variation no normalisation step can resolve. **That is exactly where you want Senzing.**
 
 Data quality and alignment are not optional. They are what makes ER cheap, fast, and explainable.
+
+<!-- 
+Some in the room will expect us to talk about Senzing here. We deliberately don't. The point is that ER depends on data engineering — it does not replace it.
+The hash-as-free-dedup trick is worth pausing on. Most teams skip it.
+"Know your data" is the principle. That is what determines whether you need ER at all.
+-->
 
 ---
 
 ## Raw data — what it looks like before we touch it
 
-*min_aml dataset — same physical people, very different strings:*
+*Throughout this workshop we use the **min_aml** dataset — a small, public, redactable AML dataset built from OpenOwnership (UK beneficial-ownership records) and OpenSanctions (sanctioned entities). Same physical people; very different strings:*
 
 | Record ID | Full name | DOB | Country |
 |---|---|---|---|
@@ -297,7 +308,15 @@ Source → DQ → Graph (input) → Senzing → Graph (resolved) → Decision la
 
 2. **Senzing is the source of truth for resolution.** Even overrides from Phase 5 go *back through Senzing* via trust-ID updates. The graph never quietly disagrees with the engine.
 
-These two rules are why the architecture has the shape it has.
+These two rules are why the architecture has the shape it has. A third: the `GIN → SZ` arrow implies an explicit **mapping step** — graph nodes are not Senzing records. Section 07 walks the mapping code in detail.
+
+<!-- 
+This is the single diagram the audience needs to retain. Spend 7 minutes on it.
+Walk every box, walk every arrow, name what crosses each arrow.
+The dotted edge from HEUR is the question the audience will lean in on — promise the explanation in Phase 5, do not pre-explain.
+The "we are here" map is the most important pacing device in the workshop — reinforce it at every phase.
+Christophe owns this section — one voice setting up the master map is easier to follow.
+-->
 
 ---
 
@@ -338,17 +357,18 @@ These two rules are why the architecture has the shape it has.
 ```
 (:Source {code: "KYC"})
   <-[:FROM]- (:Record:Person {
-                record_id: "KYC-001",
-                raw_payload: {...},
+                record_id:          "KYC-001",
+                name:               "mohammed al rashid",
+                date_of_birth:      "1982-03-14",
+                nationality:        "ARE",
+                raw_payload:        {...},
                 normalised_payload: {...},
-                dedup_hash: "38d2f8ef964b7af1"})
-              -[:HAS_NAME]->    (:Name    {value: "mohammed al rashid"})
-              -[:HAS_DOB]->     (:DOB     {value: "1982-03-14"})
-              -[:HAS_PASSPORT]->(:Passport {value: "P12345678", country: "ARE"})
-              -[:HAS_COUNTRY]-> (:Country  {iso3: "ARE"})
+                dedup_hash:         "38d2f8ef964b7af1"})
+              -[:HAS_PASSPORT]-> (:Passport {number: "P12345678", country: "ARE"})
+              -[:HAS_ADDRESS]->  (:Address  {full: "12 Frederick Street, Port of Spain"})
 ```
 
-Attribute nodes are *shared* across records when the value matches. Two records sharing passport `P12345678` attach to the **same** `:Passport` node — a structural fact, before any resolution.
+**Scalar attributes** — name, DOB, nationality — sit as properties on the `:Record` node. **Shared identifiers** — passport, address, phone — become their own nodes, linked back. Two records sharing passport `P12345678` attach to the **same** `:Passport` node — a structural fact, before any resolution.
 
 ---
 
@@ -359,16 +379,14 @@ Attribute nodes are *shared* across records when the value matches. Two records 
 <div class="columns">
 <div class="col-img">
 
-![Subgraph showing two Record nodes sharing a Passport node and a DOB node, but no EntityGroup connecting them](https://picsum.photos/seed/phase1-exploded/600/800)
+![min_aml dataset in Hume — records as individual nodes, companies and people visible, no EntityGroup connecting them](assets/screenshots/min_aml_not_resolved.png)
 
 </div>
 <div class="col-content">
 
-Two records share `:Passport P12345678`.
+Two disconnected clusters. Top: *Gold Wynn UK Holdings Limited* (`12524623`) + *Jeffrey Weinzweig*. Bottom: *GOLD WYNN UK HOLDINGS LIMITED* (same reg) + *Jeffrey Mark Weinzweig*. Same company, same person — different source, different name string, **no edge between them**.
 
-The graph notices this as a **structural fact**.
-
-The graph does **not** declare them the same person — that declaration is Senzing's call.
+The graph holds structural facts. It does **not** declare them the same entity — that declaration is Senzing's call.
 
 The minute Phase 1 starts making resolution decisions, the architecture loses the invariant that *Senzing is the source of truth*.
 
@@ -394,6 +412,14 @@ Phase 1 is a deliverable, not just a setup step. Value in week one, not week twe
 
 # Phase 2 · 14 min
 ## Senzing Fundamentals (Paco's Deep Dive)
+
+<!-- 
+THIS IS PACO'S BLOCK — 14 minutes. The longest single section.
+We provide the vocabulary slides and the round-trip structure; Paco brings the substance and the engine internals.
+Christophe: hand off cleanly. "Time for Paco to tell us what the engine actually does."
+Paco: stay descriptive, not comparative. The audience came to understand the engine — not to compare it.
+Don't lose the configuration-model beat to time pressure. It's the difference between "we use Senzing" and "we know how to deploy Senzing".
+-->
 
 ---
 
@@ -586,6 +612,28 @@ A Cypher trigger fires on `:Record` creation and enqueues the push. Right when C
 
 Both work. Both are idempotent on Senzing's side. The choice is dictated by the customer's stack, not by Senzing.
 
+<!-- 
+CDC versus triggers is the audience's call, not ours. Present them as alternatives. 
+Engineers in the room will know immediately which one fits their stack — don't push.
+-->
+
+---
+
+<!-- _class: img-bottom -->
+
+## The pipeline in action
+
+<div class="hero-wrap">
+
+![Hume Orchestra — Senzing pipeline showing source ingest, normalisation, Senzing push, affected-entities response, and EntityGroup write steps](assets/screenshots/hume-orchestra-senzing-pipeline.png)
+
+</div>
+<div class="img-caption">
+
+Hume Orchestra pipeline: source data → normalisation → record push to Senzing → affected-entities response handler → `EntityGroup` write to the graph. Each stage is independently observable and replayable.
+
+</div>
+
 ---
 
 <!-- _class: code-left -->
@@ -625,6 +673,11 @@ RETURN {
 </div>
 </div>
 
+<!-- 
+Engineers will photograph this slide. Keep it readable on screen — don't rush past it.
+"DATA_SOURCE and RECORD_ID are not metadata" is the one line that saves them a painful debugging session later.
+-->
+
 ---
 
 ## What comes back — the affected-entities response
@@ -654,6 +707,29 @@ Entity 1002 was absorbed into 1001. We keep it in the graph — never delete ret
 
 ---
 
+<!-- _class: img-left -->
+
+## What WHY looks like in practice
+
+<div class="columns">
+<div class="col-img">
+
+![Senzing WHY action results — GOLD WYNN UK HOLDINGS LIMITED resolved across two Open-Sanctions records, per-feature scores for Name, National ID, and Registration Date shown side by side](assets/screenshots/min_aml_senzing_why.png)
+
+</div>
+<div class="col-content">
+
+- Two records resolved into one entity
+- Senzing surfaces per-feature scores: **Name**, **National ID**, **Registration Date**
+- This is the `WHY` payload — we attach it to the `RESOLVED_TO` edge in the graph
+- Analysts query it directly in Phase 4
+- **No mystery merges**
+
+</div>
+</div>
+
+---
+
 ## Writing affected entities to the graph
 
 For each affected entity:
@@ -672,7 +748,7 @@ For each affected entity:
 <div class="columns">
 <div class="col-img">
 
-![Graph subgraph: Source node on left, two Record nodes in centre, one EntityGroup node on right. Records connect to EntityGroup via RESOLVED_TO edges carrying WHY and match_level properties. Records also connect to Source via FROM.](https://picsum.photos/seed/entitygroup-subgraph/600/800)
+![min_aml resolved in Hume — EntityGroup nodes linking records via RESOLVED_TO edges, two entity clusters visible](assets/screenshots/min_aml_resolved_1.png)
 
 </div>
 <div class="col-content">
@@ -709,12 +785,25 @@ If we merged attributes from multiple sources onto a single node, a KYC-only ana
 
 The `EntityGroup` itself is visible across sources — an analyst should know there is a resolution group, even if they cannot see all its contents. What they cannot see is content from sources outside their scope.
 
+<!-- 
+Spend time here. The no-fusion rule will surprise some of the room.
+Compliance officers will quote this back. Say it clearly: "We never fuse records into the EntityGroup."
+This is the single rule that makes the architecture compatible with how customers actually run access control.
+-->
+
 ---
 
 <!-- _class: module -->
 
 # Section 08 · 6 min
-## What Is OOTB in Senzing: Geocoding and Globalisation
+## The Depth of the Engine — What You'd Never Build Yourself
+
+<!-- 
+Paco leads this block. His job: show the room things they would not have thought of.
+Open with the Kerimova record — pull it up, read the four scripts out loud, let it land.
+The Greek-script Cyprus address is the second strongest visual — show it without translating it first.
+The build-vs-buy argument is deliberately blunt. Do not soften it.
+-->
 
 ---
 
@@ -825,7 +914,9 @@ If an upstream KYC system stripped to ASCII (as many do), those aliases would be
 | Identifier format variants | Country-address consistency checks |
 | Cross-cultural name conventions | — |
 
-Do not duplicate Senzing's work upstream. Do the small, context-shaped, unambiguous work that lives outside the engine.
+**Buy the engine. Own the thin layer. That is the correct split.**
+
+This is not an advertisement. It is an accounting problem. Teams that have tried to build what the Kerimova record demonstrates have spent more than the licence cost — and most did not have the right people.
 
 ---
 
@@ -838,6 +929,13 @@ Do not duplicate Senzing's work upstream. Do the small, context-shaped, unambigu
 *Up to 5 minutes — strict.*
 
 If no questions: "By show of hands — who is running ER in production today?"
+
+<!-- 
+Up to 3 questions, strict. If a question opens a longer conversation, park it for the end.
+If no questions come: "By show of hands — who is running ER in production today?" or "who has a graph already?" — calibrates the room before Phase 3.
+Paco co-anchors this. Questions in this room often go to him.
+Transition out: "We said Senzing is idempotent. Phase 3 is what that buys us when the data starts moving."
+-->
 
 ---
 
@@ -915,6 +1013,25 @@ Hard deletion is a one-way door we never take. Mark the record deleted with even
 | 7 | T+3d | push P201 (KYC) | 1042 | New record lands on split entity |
 
 Same pipeline. Same Senzing instance. Same records. Different conclusions at different times.
+
+---
+
+## Manual overrides: force-merge and force-apart
+
+The engine decides automatically. Analysts know things the engine cannot see.
+
+**Force-merge.** Two `EntityGroup`s the engine kept separate — name transliteration off, identifier absent from one source, match fell just below threshold. Analyst selects both, hits merge, confirms. Hume translates into the Senzing override; the collapse is recorded with an `ANALYST_MERGED` relationship carrying who merged it and when.
+
+**Force-apart.** Two records the engine resolved together — common-name collision, shared address that does not reflect shared identity. Analyst flags the conflicting records as distinct. Senzing keeps them apart; an `ANALYST_SEPARATED` relationship carries the same audit trail.
+
+Both operations are **reversible**. The override, the reversal, and the timestamps all stay in the graph.
+
+<!-- 
+Have the Hume interface open. Show the actual select-and-merge gesture live — two clicks, confirm dialog, done.
+The point is the contrast: without this, overrides require custom tooling, direct API calls, and no audit trail.
+Keep under 2 minutes. The automated version (trust IDs from the decision layer) is Phase 5.
+Stress reversibility. "A force-merge is not a hard edit — the graph never forgets it happened."
+-->
 
 ---
 
@@ -1015,6 +1132,11 @@ Five metrics worth tracking in production:
 ---
 
 ## Surviving a redo storm
+
+<!-- 
+Paco leads the redo and redo-storm content. Christophe hands off here and picks up again at Observability.
+Paco: worked example on screen — min_aml or a small synthetic set showing a cascade step by step is ideal.
+-->
 
 A storm will happen. What saves us:
 
@@ -1152,6 +1274,12 @@ Dense co-occurrence, community-membership, ambiguous shared identifiers → surf
 
 False positives in this layer are expensive. The human-in-the-loop is the right discipline.
 
+<!-- 
+This subsection is what a regulator quotes back. Linger.
+The three categories (automatic / automatic / human-reviewed) are the discipline that makes the whole mechanism trustworthy.
+Land "OverrideDecision node is not optional" before moving on.
+-->
+
 ---
 
 ## Overrides and access control
@@ -1167,9 +1295,23 @@ Signal runs across sources because that is where signal lives. Decisions respect
 ## Risks worth naming
 
 - **Over-trusting embedding similarity** — face, address, name embeddings are useful and noisier than they look. Thresholds drift with population and model. Calibrate per deployment; revisit.
-- **Feedback drift** — if the decision layer keeps correcting the same Senzing behaviour, the trust-ID log is itself a signal to tune the engine configuration. Review it.
 - **Audit pressure** — every trust-ID write is a decision. The `OverrideDecision` node is not optional — it is what a regulator will ask for first.
 - **Loops** — a trust-ID change updates the graph, which may surface new candidates. Idempotence helps; cap cycle depth as a safety net.
+
+<!-- 
+This slide is what a regulator quotes back. Linger here.
+The audit-pressure point is the one compliance teams in the room will remember.
+-->
+
+---
+
+## Why the loop is worth the complexity
+
+Senzing brings things the graph cannot: a scoring engine tuned across many customers and many years, an idempotent observable resolution layer, a consistent identity across replays and rebuilds.
+
+Replacing it with a graph algorithm would lose all of that. **Augmenting it keeps it and adds context.**
+
+> The reinforcement loop is the place where domain context re-enters a resolution pipeline that would otherwise only see features. That is the loop closing. That is the whole workshop in one mechanism.
 
 ---
 
@@ -1232,14 +1374,21 @@ An advanced expand from a `Person` node automatically traverses `RESOLVED_TO` �
 
 <div class="hero-wrap">
 
-![Hume 3.0 Advanced Expand screenshot: investigator selects a Person node, triggers Smart ER expand, sees the full entity-aware neighbourhood across multiple source records with provenance and WHY indicators on each edge](https://picsum.photos/seed/hume3-smart-er/1200/700)
+![Hume Smart ER visualization — entity groups rendered as clusters, member records connected via RESOLVED_TO, two entity groups visible across the min_aml dataset](assets/screenshots/min_aml_resolved_2.png)
 
 </div>
 <div class="img-caption">
 
-Advanced Expand with Smart ER. Before: analysts had to be aware of entity groups and build queries around them. After: one click — entity-aware neighbourhood, with provenance and resolution evidence surfaced automatically.
+Hume entity-aware navigation: entity groups surface the resolved view across sources. Smart ER Advanced Expand traverses `RESOLVED_TO → EntityGroup → Records` automatically — one click, entity-aware, RBAC-filtered, `WHY` on every edge. Before: analysts had to know about entity groups and build queries around them. After: one click.
 
 </div>
+
+<!-- 
+90-second demo — not a tour of Hume's full surface.
+Just the advanced expand from a record into the entity-aware neighbourhood.
+If the live demo fails on stage: show this slide without apologising.
+End on the principle: the analyst reasons about entities; the architecture handles records and groups underneath.
+-->
 
 ---
 
@@ -1264,6 +1413,13 @@ Everything in Phase 6 is downstream of getting Phases 1–5 right. If we have th
 <!-- _class: module -->
 
 # We have been around the loop.
+
+<!-- 
+Transition: "Resolution is a means. Phase 6 is what the people we built this for actually do with it."
+Pace the close section lower than Phase 5 — the room is accumulating; let it breathe.
+End on the principle, not the product: "If we have the loop, observability, and a graph decision layer driven by trust IDs, the consumer story is engineering, not philosophy."
+The remainder is theirs.
+-->
 
 ---
 
