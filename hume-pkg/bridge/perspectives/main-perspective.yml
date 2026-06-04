@@ -1,0 +1,70 @@
+kind: Perspective
+metadata:
+  name: Main Perspective
+  knowledge-graph: bridge
+spec:
+  visibility:
+    classes:
+      defaultVisibility: hidden
+      show:
+      - EntityGroup
+      - EntityGroup$$id
+      - EntityGroup$$senzingEntityId
+      - Organization
+      - Organization$$address
+      - Organization$$addressCountry
+      - Organization$$alias
+      - Organization$$dissolutionDate
+      - Organization$$id
+      - Organization$$name
+      - Organization$$nationalIdNumber
+      - Organization$$nationalIdType
+      - Organization$$registrationCountry
+      - Organization$$registrationDate
+      - Organization$$riskTopics
+      - Organization$$senzingEntityId
+      - Organization$$source
+      - Organization$$sourceCode
+      - Person
+      - Person$$address
+      - Person$$addressCountry
+      - Person$$alias
+      - Person$$citizenship
+      - Person$$dateofBirth
+      - Person$$gender
+      - Person$$id
+      - Person$$name
+      - Person$$nationalIdNumber
+      - Person$$nationalIdType
+      - Person$$nationality
+      - Person$$passportNumber
+      - Person$$senzingEntityId
+      - Person$$source
+      - Person$$sourceCode
+      - Person$$taxId
+      - Person$$url
+    relationships:
+      defaultVisibility: hidden
+      show:
+      - Organization-INFLUENCE->Organization
+      - Organization-RESOLVED_TO->EntityGroup
+      - Person-CUSTOMER->Organization
+      - Person-DIRECTOR->Organization
+      - Person-FAMILY->Person
+      - Person-FAMILY->Person$$role
+      - Person-INFLUENCE->Organization
+      - Person-RESOLVED_TO->EntityGroup
+    actions:
+    - ca-senzing-entity-id
+    - full-graph
+    - merge-records---organization
+    - merge-records---person
+    - os-data
+    - senzing---how
+    - senzing---why
+    - show-er
+    - wynn-weinz
+  resourceName: bridge-neo4j
+  default: false
+  synced: true
+  searchRelevance: {}

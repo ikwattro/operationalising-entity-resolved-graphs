@@ -1,0 +1,21 @@
+kind: GroupingStrategy
+metadata:
+  name: senzing-id
+  knowledge-graph: bridge
+spec:
+  label: senzing-id
+  active: true
+  inclusions:
+  - EntityGroup
+  - Organization
+  - Person
+  ruleGroups:
+    logicalOperator: OR
+    groups:
+    - logicalOperator: AND
+      rules:
+      - attributeName: senzingEntityId
+        operator: SAME_VALUE
+  groupCaptioningMethod: CUSTOM_ATTRIBUTES
+  groupCaptioningAttributes:
+  - name

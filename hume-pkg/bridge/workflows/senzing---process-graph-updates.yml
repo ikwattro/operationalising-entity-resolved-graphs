@@ -1,0 +1,516 @@
+kind: Workflow
+metadata:
+  name: Senzing - Process Graph Updates
+  knowledge-graph: bridge
+spec:
+  label: Senzing - Process Graph Updates
+  autostart: true
+  skipUpdateIfRunning: true
+  startWorkflowAfterImport: false
+  restartWorkflowAfterUpdate: true
+  schedule: {}
+  components:
+  - name: Persons CDC
+    type: "#Hume.Orchestra.DataSource.Neo4jCDC"
+    disabled: false
+    resourceName: bridge-neo4j
+    to:
+    - name: debug cdc event
+      disabled: false
+    canvasPosition:
+      x: -160
+      "y": -180
+    config:
+      clear_repository: false
+      contextVariableDefaultValue: false
+      managedByContext: false
+      polling_period: 1000
+      selectors: |
+        [
+          {
+            "select": "n",
+            "labels": ["Person"]
+          }
+        ]
+      startFrom: current
+      store_error_content: true
+      store_message_content: true
+      transactionTimeoutInSec: 0
+  - name: debug cdc event
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: delete events
+      disabled: false
+    - name: update or create events
+      disabled: false
+    canvasPosition:
+      x: 180
+      "y": -20
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        # MessageTransformer
+        #
+        # The incoming message body and headers are automatically available as `body` and `headers` variables in the script
+        # and they're both dictionaries.
+        # If the previous component is a file based datasource, only the headers will be accessible.
+        # --------
+
+        # returning the exact same incoming message to the next component
+
+        return body
+  - name: delete events
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: extract "before" state
+      disabled: false
+    canvasPosition:
+      x: 520
+      "y": -120
+    config:
+      filter_script: |-
+        valid = ['d']
+
+        return body['event']['operation'] in valid
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+  - name: extract "before" state
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: delete record from Senzing
+      disabled: false
+    canvasPosition:
+      x: 700
+      "y": -120
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |-
+        before = body['event']['state']['before']['properties']
+
+        is_graph_editing = '__hume__createdViaHume' in before and before['__hume__createdViaHume'] is True
+
+        if is_graph_editing:
+          before['source'] = 'HUME_GE'
+
+        return {'data': before}
+  - name: delete record from Senzing
+    type: "#Hume.Orchestra.Http.HttpRequest"
+    disabled: false
+    to:
+    - name: extract sz response
+      disabled: false
+    canvasPosition:
+      x: 920
+      "y": -120
+    config:
+      always_redeliver: false
+      backoff_multiplier: 2
+      binary_download: false
+      binary_upload: false
+      concurrent: false
+      connections_per_route: 1
+      enable_retry: false
+      http_client_connect_timeout: 0
+      http_client_socket_timeout: 0
+      maximum_redeliveries: 5
+      merge_body_at_root: false
+      method: DELETE
+      multipart: false
+      number_of_threads: 1
+      outputPath: _data
+      raw_response: false
+      redelivery_delay: 1000
+      requestParams:
+        withInfo: "true"
+      send_full_body_message: false
+      store_error_content: true
+      store_message_content: true
+      throw_error_if_collision: true
+      uri: "http://senzing-api-server:8582/data-sources/${data.source}/records/${data.id}"
+      use_exponential_backoff: false
+  - name: extract sz response
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: to kafka topic
+      disabled: false
+    canvasPosition:
+      x: 1180
+      "y": -120
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: "return body['_data']"
+  - name: to kafka topic
+    type: "#Hume.Orchestra.Persistence.Kafka"
+    disabled: false
+    resourceName: internal-kafka-broker
+    canvasPosition:
+      x: 2180
+      "y": -120
+    config:
+      clientId: senzing_demo_p1
+      store_error_content: true
+      store_message_content: true
+      topic: senzing_record_update
+  - name: update or create events
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: Fetch node network
+      disabled: false
+    canvasPosition:
+      x: 500
+      "y": 220
+    config:
+      filter_script: |-
+        valid = ['c', 'u']
+
+        return body['event']['operation'] in valid
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+  - name: Fetch node network
+    description: Not needed now
+    type: "#Hume.Orchestra.Persistence.Neo4jWriter"
+    disabled: false
+    resourceName: bridge-neo4j
+    to:
+    - name: extract "after" state
+      disabled: false
+    canvasPosition:
+      x: 700
+      "y": 220
+    config:
+      aggregation_timeout: 300
+      batch_size: 20
+      batch_writes: false
+      cypher_query: |-
+        MATCH (n)
+        WHERE elementId(n) = $event.elementId
+
+        RETURN EXISTS { (n)-[:RELATED]-() } AS apart
+      delay: 0
+      max_retry: 0
+      store_error_content: true
+      store_message_content: true
+      stream_records: false
+      transactionTimeoutInSec: 0
+  - name: extract "after" state
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: is org ?
+      disabled: false
+    - name: is person ?
+      disabled: false
+    canvasPosition:
+      x: 880
+      "y": 220
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |-
+        after = body['event']['state']['after']['properties']
+        after['labels'] = body['event']['state']['after']['labels']
+
+        if body['_records'][0]['apart'] is True:
+          after['apart_id'] = after['id']
+
+        return {'data': after}
+  - name: is person ?
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: transform person to senzing record
+      disabled: false
+    canvasPosition:
+      x: 1080
+      "y": 80
+    config:
+      filter_script: "return 'Person' in body['data']['labels']"
+      store_error_content: true
+      store_message_content: true
+  - name: transform person to senzing record
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: debug
+      disabled: false
+    canvasPosition:
+      x: 1280
+      "y": 80
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        import json
+        import uuid
+
+        _ = body['data']
+
+        is_graph_editing = '__hume__createdViaHume' in body['data'] and body['data']['__hume__createdViaHume'] is True
+
+        record = {}
+        if is_graph_editing:
+          record['DATA_SOURCE'] = 'HUME_GE'
+        else:
+          record['DATA_SOURCE'] = _['source']
+        record['RECORD_ID'] = _['id']
+        record['RECORD_TYPE'] = 'PERSON'
+        features = []
+
+        features.append({'NAME_TYPE': 'PRIMARY', 'NAME_FULL': _['name']})
+
+        if 'alias' in _:
+          for alias in _['alias']:
+            if alias != _['name']:
+              features.append({'NAME_TYPE': 'ALIAS', 'NAME_FULL': alias})
+
+        if 'dateofBirth' in _:
+          features.append({'DATE_OF_BIRTH': _['dateofBirth']})
+
+        if 'gender' in _:
+          features.append({'GENDER': _['gender']})
+
+        if 'nationality' in _:
+          features.append({'NATIONALITY': _['nationality']})
+
+        if 'citizenship' in _:
+          features.append({'CITIZENSHIP': _['citizenship']})
+
+        if 'taxId' in _:
+          features.append({'TRUSTED_ID_TYPE': 'TAX_ID', 'TRUSTED_ID_NUMBER': _['taxId']})
+
+        if 'passportNumber' in _:
+          features.append({'PASSPORT_NUMBER': _['passportNumber']})
+
+        if 'nationalIdNumber' in _:
+          national_id = {'NATIONAL_ID_NUMBER': _['nationalIdNumber']}
+          if 'nationalIdType' in _:
+            national_id['NATIONAL_ID_TYPE'] = _['nationalIdType']
+          features.append(national_id)
+
+        if 'address' in _:
+          addr = {'ADDRESS_TYPE': 'PRIMARY', 'ADDRESS': _['address']}
+          if 'addressCountry' in _:
+            addr['ADDR_COUNTRY'] = _['addressCountry']
+          features.append(addr)
+
+        if 'url' in _:
+          features.append({'WEBSITE_ADDRESS': _['url']})
+
+        if 'manualMergeId' in _:
+          features.append({'TRUSTED_ID_TYPE': 'MANUAL_MERGE', 'TRUSTED_ID_NUMBER': _['manualMergeId']})
+
+        if 'groupAssociations' in _:
+          assocs = _['groupAssociations'].split(';')
+          for assoc in assocs:
+            features.append({'GROUP_ASSOCIATION_TYPE': 'MEMBER', 'GROUP_ASSOCIATION_ORG_NAME': assoc})
+
+        random_id = str(uuid.uuid4())
+        features.append({'RANDOM_ID': random_id})
+
+        record['FEATURES'] = features
+
+        return record
+  - name: debug
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: send record to Senzing
+      disabled: false
+    canvasPosition:
+      x: 1480
+      "y": 180
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        # MessageTransformer
+        #
+        # The incoming message body and headers are automatically available as `body` and `headers` variables in the script
+        # and they're both dictionaries.
+        # If the previous component is a file based datasource, only the headers will be accessible.
+        # --------
+
+        # returning the exact same incoming message to the next component
+
+        return body
+  - name: send record to Senzing
+    type: "#Hume.Orchestra.Http.HttpRequest"
+    disabled: false
+    to:
+    - name: debug 2
+      disabled: false
+    canvasPosition:
+      x: 1680
+      "y": 180
+    config:
+      always_redeliver: false
+      backoff_multiplier: 2
+      binary_download: false
+      binary_upload: false
+      concurrent: false
+      connections_per_route: 1
+      enable_retry: false
+      http_client_connect_timeout: 0
+      http_client_socket_timeout: 0
+      maximum_redeliveries: 5
+      merge_body_at_root: true
+      method: POST
+      multipart: false
+      number_of_threads: 1
+      outputPath: enriched
+      raw_response: false
+      redelivery_delay: 1000
+      requestParams:
+        withInfo: "true"
+      send_full_body_message: true
+      store_error_content: true
+      store_message_content: true
+      throw_error_if_collision: true
+      uri: "http://senzing-api-server:8582/data-sources/${DATA_SOURCE}/records"
+      use_exponential_backoff: false
+  - name: debug 2
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: to kafka topic
+      disabled: false
+    canvasPosition:
+      x: 1900
+      "y": 180
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        # MessageTransformer
+        #
+        # The incoming message body and headers are automatically available as `body` and `headers` variables in the script
+        # and they're both dictionaries.
+        # If the previous component is a file based datasource, only the headers will be accessible.
+        # --------
+
+        # returning the exact same incoming message to the next component
+
+        return body
+  - name: is org ?
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: transform org to senzing records
+      disabled: false
+    canvasPosition:
+      x: 1080
+      "y": 320
+    config:
+      filter_script: "return 'Organization' in body['data']['labels']"
+      store_error_content: true
+      store_message_content: true
+  - name: transform org to senzing records
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: debug
+      disabled: false
+    canvasPosition:
+      x: 1280
+      "y": 320
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        import json
+        import uuid
+
+        _ = body['data']
+
+        is_graph_editing = '__hume__createdViaHume' in body['data'] and body['data']['__hume__createdViaHume'] is True
+
+        record = {}
+        if is_graph_editing:
+          record['DATA_SOURCE'] = 'HUME_GE'
+        else:
+          record['DATA_SOURCE'] = _['source']
+        record['RECORD_ID'] = _['id']
+        record['RECORD_TYPE'] = 'ORGANIZATION'
+        features = []
+
+        features.append({'NAME_TYPE': 'PRIMARY', 'NAME_ORG': _['name']})
+
+        if 'alias' in _:
+          for alias in _['alias']:
+            if alias != _['name']:
+              features.append({'NAME_TYPE': 'ALIAS', 'NAME_ORG': alias})
+
+        if 'nationalIdNumber' in _:
+          national_id = {'NATIONAL_ID_NUMBER': _['nationalIdNumber']}
+          if 'nationalIdType' in _:
+            national_id['NATIONAL_ID_TYPE'] = _['nationalIdType']
+          features.append(national_id)
+
+        if 'registrationDate' in _:
+          features.append({'REGISTRATION_DATE': _['registrationDate']})
+
+        if 'registrationCountry' in _:
+          features.append({'REG_COUNTRY': _['registrationCountry']})
+
+        if 'dissolutionDate' in _:
+          features.append({'DISSOLUTION_DATE': _['dissolutionDate']})
+
+        if 'address' in _:
+          addr = {'ADDRESS_TYPE': 'PRIMARY', 'ADDRESS': _['address']}
+          if 'addressCountry' in _:
+            addr['ADDR_COUNTRY'] = _['addressCountry']
+          features.append(addr)
+
+        if 'manualMergeId' in _:
+          features.append({'TRUSTED_ID_TYPE': 'MANUAL_MERGE', 'TRUSTED_ID_NUMBER': _['manualMergeId']})
+
+        random_id = str(uuid.uuid4())
+        features.append({'RANDOM_ID': random_id})
+
+        record['FEATURES'] = features
+
+        return record
+  - name: Organizations CDC
+    type: "#Hume.Orchestra.DataSource.Neo4jCDC"
+    disabled: false
+    resourceName: bridge-neo4j
+    to:
+    - name: debug cdc event
+      disabled: false
+    canvasPosition:
+      x: -160
+      "y": 100
+    config:
+      clear_repository: false
+      contextVariableDefaultValue: false
+      managedByContext: false
+      polling_period: 1000
+      selectors: |
+        [
+          {
+            "select": "n",
+            "labels": ["Organization"]
+          }
+        ]
+      startFrom: current
+      store_error_content: true
+      store_message_content: true
+      transactionTimeoutInSec: 0

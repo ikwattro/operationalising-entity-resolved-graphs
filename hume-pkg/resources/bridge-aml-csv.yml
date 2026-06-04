@@ -1,0 +1,8 @@
+kind: EcosystemResource
+metadata:
+  name: bridge-aml-csv
+spec:
+  fqn: "#Hume.Orchestra.Resource.FileSystem.Local"
+  parameters:
+  - name: path
+    value: /data/bridge/csv

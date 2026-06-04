@@ -1,0 +1,284 @@
+kind: Workflow
+metadata:
+  name: Import AML CSV
+  knowledge-graph: bridge
+spec:
+  label: Import AML CSV
+  autostart: false
+  skipUpdateIfRunning: true
+  startWorkflowAfterImport: false
+  restartWorkflowAfterUpdate: true
+  schedule: {}
+  components:
+  - name: read csv files
+    type: "#Hume.Orchestra.DataSource.FileReader"
+    disabled: false
+    resourceName: bridge-aml-csv
+    to:
+    - name: filter for orgs.csv
+      disabled: false
+    - name: filter for persons.csv
+      disabled: false
+    canvasPosition:
+      x: 280
+      "y": 420
+    config:
+      clear_repository: false
+      contextVariableDefaultValue: false
+      delay: 500
+      eagerMaxMessagesPerPoll: true
+      managedByContext: false
+      maxMessagesPerPoll: 1000
+      move_files: false
+      recursive: false
+      store_error_content: true
+      use_repository: false
+  - name: filter for persons.csv
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: process csv 1
+      disabled: false
+    canvasPosition:
+      x: 700
+      "y": 200
+    config:
+      filter_script: |
+        return 'persons.csv' in headers['CamelFileName']
+      store_error_content: true
+      store_message_content: true
+  - name: process csv 1
+    type: "#Hume.Orchestra.Processor.CSVFileProcessor"
+    disabled: false
+    to:
+    - name: write persons to graph
+      disabled: false
+    canvasPosition:
+      x: 940
+      "y": 200
+    config:
+      delimiter: ","
+      parallel: false
+      suffix: csv
+      use_headers: true
+  - name: write persons to graph
+    type: "#Hume.Orchestra.Persistence.Neo4jWriter"
+    disabled: false
+    resourceName: bridge-neo4j
+    to:
+    - name: 3s watch
+      disabled: false
+    canvasPosition:
+      x: 1180
+      "y": 200
+    config:
+      cypher_query: |
+        MERGE (p:Person {id: $record_id})
+        SET p:Entity
+        SET p.source = $data_source
+        SET p.name = $primary_name
+        SET p.alias = split($aliases, ';')
+        SET p.gender = $gender
+        SET p.citizenship = $citizenship
+        SET p.taxId = $tax_id_number
+        SET p.dateofBirth = date($date_of_birth)
+        SET p.nationality = $nationality
+        SET p.url = $url
+        SET p.nationalIdNumber = $national_id_number
+        SET p.nationalIdType = $national_id_type
+        SET p.passportNumber = $passport_number
+        SET p.address = $address
+        SET p.addressCountry = $address_country
+
+        RETURN p
+
+        NEXT
+
+        WHEN $data_source = 'OPEN-SANCTIONS' THEN {
+          SET p:OpenSanctions
+          SET p.sourceCode = 'OS'
+        } ELSE {
+          SET p:OpenOwnership
+          SET p.sourceCode = 'OO'
+        }
+      delay: 0
+      max_retry: 0
+      store_error_content: true
+      store_message_content: true
+      stream_records: false
+      transactionTimeoutInSec: 0
+  - name: 3s watch
+    type: "#Hume.Orchestra.Monitor.IdleWatcher"
+    disabled: false
+    to:
+    - name: set nodes completed
+      disabled: false
+    canvasPosition:
+      x: 1440
+      "y": 320
+    config:
+      maxIdleTime: 3000
+      store_error_content: true
+      store_message_content: true
+  - name: set nodes completed
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    canvasPosition:
+      x: 1620
+      "y": 320
+    config:
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |-
+        __context__['nodes_completed'] = True
+
+        return {}
+  - name: filter for orgs.csv
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: process csv 2
+      disabled: false
+    canvasPosition:
+      x: 700
+      "y": 420
+    config:
+      filter_script: |
+        return 'organizations.csv' in headers['CamelFileName']
+      store_error_content: true
+      store_message_content: true
+  - name: process csv 2
+    type: "#Hume.Orchestra.Processor.CSVFileProcessor"
+    disabled: false
+    to:
+    - name: write orgs to graph
+      disabled: false
+    canvasPosition:
+      x: 940
+      "y": 420
+    config:
+      delimiter: ","
+      parallel: false
+      suffix: csv
+      use_headers: true
+  - name: write orgs to graph
+    type: "#Hume.Orchestra.Persistence.Neo4jWriter"
+    disabled: false
+    resourceName: bridge-neo4j
+    to:
+    - name: 3s watch
+      disabled: false
+    canvasPosition:
+      x: 1180
+      "y": 420
+    config:
+      cypher_query: |-
+        MERGE (o:Organization {id: $record_id})
+        SET o:Entity
+        SET o.source = $data_source
+        SET o.name = $primary_name
+        SET o.alias = split($aliases, ';')
+        SET o.registrationCountry = $registration_countries
+        SET o.registrationDate = date($registration_date)
+        SET o.nationalIdType = $national_id_type
+        SET o.nationalIdNumber = $national_id_number
+        SET o.dissolutionDate = date($dissolution_date)
+        SET o.riskTopics = $risk_topics
+        SET o.address = $address
+        SET o.addressCountry = $address_country
+
+        RETURN o
+
+        NEXT
+
+        WHEN $data_source = 'OPEN-SANCTIONS' THEN {
+          SET o:OpenSanctions
+          SET o.sourceCode = 'OS'
+        } ELSE {
+          SET o:OpenOwnership
+          SET o.sourceCode = 'OO'
+        }
+      delay: 0
+      max_retry: 0
+      store_error_content: true
+      store_message_content: true
+      stream_records: false
+      transactionTimeoutInSec: 0
+  - name: on nodes completion
+    type: "#Hume.Orchestra.Action.Trigger"
+    disabled: false
+    to:
+    - name: get rels file
+      disabled: false
+    canvasPosition:
+      x: 300
+      "y": 680
+    config:
+      contextVariable: nodes_completed
+      contextVariableDefaultValue: false
+      delay: 1
+      managedByContext: true
+      store_error_content: true
+      store_message_content: true
+  - name: get rels file
+    type: "#Hume.Orchestra.DataSource.FileSystemQuery"
+    disabled: false
+    resourceName: bridge-aml-csv
+    to:
+    - name: filter for rels.csv
+      disabled: false
+    canvasPosition:
+      x: 500
+      "y": 680
+    config:
+      operation: getFile
+      path: relationships.csv
+      store_error_content: true
+      store_message_content: true
+  - name: filter for rels.csv
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: true
+    to:
+    - name: process csv 3
+      disabled: false
+    canvasPosition:
+      x: 700
+      "y": 680
+    config:
+      filter_script: |
+        return 'relationships.csv' in headers['CamelFileName']
+      store_error_content: true
+      store_message_content: true
+  - name: process csv 3
+    type: "#Hume.Orchestra.Processor.CSVFileProcessor"
+    disabled: false
+    to:
+    - name: write rels to graph
+      disabled: false
+    canvasPosition:
+      x: 940
+      "y": 680
+    config:
+      delimiter: ","
+      parallel: false
+      suffix: csv
+      use_headers: true
+  - name: write rels to graph
+    type: "#Hume.Orchestra.Persistence.Neo4jWriter"
+    disabled: false
+    resourceName: bridge-neo4j
+    canvasPosition:
+      x: 1180
+      "y": 680
+    config:
+      cypher_query: |-
+        MERGE (n1:Entity {id: $from_record_id})
+        MERGE (n2:Entity {id: $to_record_id})
+        MERGE (n1)-[r:$($rel_type)]->(n2)
+        SET r.role = $relationship_role
+      delay: 0
+      max_retry: 0
+      store_error_content: true
+      store_message_content: true
+      stream_records: false
+      transactionTimeoutInSec: 0

@@ -1,0 +1,300 @@
+kind: Workflow
+metadata:
+  name: Senzing - Process Entity Updates
+  knowledge-graph: bridge
+spec:
+  label: Senzing - Process Entity Updates
+  autostart: true
+  skipUpdateIfRunning: true
+  startWorkflowAfterImport: false
+  restartWorkflowAfterUpdate: true
+  schedule: {}
+  components:
+  - name: Kafka Consumer
+    type: "#Hume.Orchestra.DataSource.Kafka"
+    disabled: false
+    resourceName: internal-kafka-broker
+    to:
+    - name: Filter out no-entity-changes
+      disabled: false
+    canvasPosition:
+      x: 40
+      "y": 380
+    config:
+      autoPause: true
+      auto_offset_reset: earliest
+      clear_offset_repository: false
+      clientId: senzing_group_1_client_1
+      contextVariableDefaultValue: false
+      disable_auto_commit: false
+      groupId: senzing_group_1
+      managedByContext: false
+      maxPollRecords: 50
+      repository_identifier: COMPONENT NAME
+      store_error_content: true
+      topic: senzing_record_update
+      use_offset_repository: true
+  - name: Filter out no-entity-changes
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: batch 100 - 300ms
+      disabled: false
+    canvasPosition:
+      x: 199
+      "y": 380
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        affected_entities = []
+
+        if 'affectedEntities' in body['data']['info']:
+          for e in body['data']['info']['affectedEntities']:
+            affected_entities.append({'id': e})
+
+        return affected_entities
+  - name: batch 100 - 300ms
+    type: "#Hume.Orchestra.Processor.Batch"
+    disabled: false
+    to:
+    - name: distinct
+      disabled: false
+    canvasPosition:
+      x: 355
+      "y": 380
+    config:
+      batch_key: _batch
+      batch_size: 100
+      batch_timeout: 300
+      synchronous: true
+  - name: distinct
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: Fetch entity from Senzing
+      disabled: false
+    canvasPosition:
+      x: 511
+      "y": 380
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        entities = []
+        for x in body['_batch']:
+          entities.append(x['id'])
+
+        return [{'id': x} for x in set(entities)]
+  - name: Fetch entity from Senzing
+    type: "#Hume.Orchestra.Http.HttpRequest"
+    disabled: false
+    to:
+    - name: Filter Processor
+      disabled: false
+    - name: debug sz result
+      disabled: false
+    canvasPosition:
+      x: 668
+      "y": 380
+    config:
+      always_redeliver: false
+      backoff_multiplier: 2
+      binary_download: false
+      binary_upload: false
+      concurrent: false
+      connections_per_route: 1
+      enable_retry: false
+      failure_handler: Handle errors
+      http_client_connect_timeout: 0
+      http_client_socket_timeout: 0
+      maximum_redeliveries: 5
+      merge_body_at_root: true
+      method: GET
+      multipart: false
+      number_of_threads: 1
+      outputPath: _data
+      raw_response: false
+      redelivery_delay: 1000
+      send_full_body_message: false
+      store_error_content: true
+      store_message_content: true
+      throw_error_if_collision: true
+      uri: "http://senzing-api-server:8582/entities/${id}"
+      use_exponential_backoff: false
+  - name: debug sz result
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    to:
+    - name: filter out single record entities
+      disabled: false
+    canvasPosition:
+      x: 823
+      "y": 380
+    config:
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        # MessageTransformer
+        #
+        # The incoming message body and headers are automatically available as `body` and `headers` variables in the script
+        # and they're both dictionaries.
+        # If the previous component is a file based datasource, only the headers will be accessible.
+        # --------
+
+        # returning the exact same incoming message to the next component
+
+        return body
+  - name: filter out single record entities
+    description: "We do not want to create EntityGroup nodes in the graph that would be attached to only 1 record, which is probably all the records that couldn't get resolved."
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: batch 1000 - 300ms
+      disabled: false
+    canvasPosition:
+      x: 980
+      "y": 380
+    config:
+      filter_script: "return len(body['data']['resolvedEntity']['records']) > 1"
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+  - name: batch 1000 - 300ms
+    type: "#Hume.Orchestra.Processor.Batch"
+    disabled: false
+    to:
+    - name: Update EntityGroup
+      disabled: false
+    canvasPosition:
+      x: 1140
+      "y": 379
+    config:
+      batch_key: _batch
+      batch_size: 1000
+      batch_timeout: 300
+      synchronous: true
+  - name: Update EntityGroup
+    type: "#Hume.Orchestra.Persistence.Neo4jWriter"
+    disabled: false
+    resourceName: bridge-neo4j
+    canvasPosition:
+      x: 1295
+      "y": 380
+    config:
+      aggregation_timeout: 300
+      batch_size: 20
+      batch_writes: false
+      cypher_query: "\nUNWIND $_batch AS data\nMERGE (e:EntityGroup {senzingEntityId: toString(data.data.resolvedEntity.entityId)})\nON CREATE\n  SET e._createdAt = coalesce(e._createdAt, datetime())\n  SET e.source = 'SENZING'\nSET e.id = e.senzingEntityId\nSET e.name = data.data.resolvedEntity.entityName\nSET e._lastSeen = datetime()\nWITH e, data, [x IN data.data.resolvedEntity.records | x['recordId']] AS recordIds\nCALL (e, recordIds) {\n  MATCH (e)<-[r:RESOLVED_TO]-(record)\n  WHERE NOT record.id IN recordIds\n  DELETE r\n}\nWITH e, data, recordIds\nCALL (e, data) {\n\tUNWIND data.data.resolvedEntity.records AS record\n\tWITH e, record\n\tWHERE record['originalSourceData']['RECORD_TYPE'] = 'PERSON'\n  MATCH (n:Person) WHERE n.id = record.recordId\n  MERGE (n)-[r:RESOLVED_TO]->(e)\n  ON CREATE\n    SET r._createdAt = coalesce(r._createdAt, datetime())\n  SET r._lastSeen = datetime()\n}\n\nCALL (e, data) {\n\tUNWIND data.data.resolvedEntity.records AS record\n\tWITH e, record\n\tWHERE record['originalSourceData']['RECORD_TYPE'] = 'ORGANIZATION'\n  MATCH (n:Organization) WHERE n.id = record.recordId\n  MERGE (n)-[r:RESOLVED_TO]->(e)\n  ON CREATE\n    SET r._createdAt = coalesce(r._createdAt, datetime())\n  SET r._lastSeen = datetime()\n}"
+      delay: 0
+      max_retry: 0
+      store_error_content: true
+      store_message_content: true
+      stream_records: false
+      transactionTimeoutInSec: 0
+  - name: Filter Processor
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: Python Transformer
+      disabled: false
+    canvasPosition:
+      x: 860
+      "y": 600
+    config:
+      filter_script: "return len(body['data']['resolvedEntity']['records']) > 2"
+      store_error_content: true
+      store_message_content: true
+  - name: Python Transformer
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    canvasPosition:
+      x: 1040
+      "y": 600
+    config:
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |
+        # MessageTransformer
+        #
+        # The incoming message body and headers are automatically available as `body` and `headers` variables in the script
+        # and they're both dictionaries.
+        # If the previous component is a file based datasource, only the headers will be accessible.
+        # --------
+
+        # returning the exact same incoming message to the next component
+
+        return body
+  - name: Filter out no-entity-changes2
+    type: "#Hume.Orchestra.Processor.PythonTransformer"
+    disabled: false
+    canvasPosition:
+      x: 520
+      "y": 600
+    config:
+      store_error_content: true
+      store_message_content: true
+      transformer_script: |-
+        affected_entities = []
+
+        if 'affectedEntities' in body['data']['info']:
+          for e in body['data']['info']['affectedEntities']:
+            affected_entities.append({'id': e})
+
+        return affected_entities
+  - name: Handle errors
+    description: "Senzing returning 404 to a call for getting an entity by id means the entity has been deleted, probably if two records have been merged together, one of the record's entity is then deleted as the record will belong to the entity of the other record."
+    type: "#Hume.Orchestra.Handler.Failure"
+    disabled: false
+    to:
+    - name: assert 404 error
+      disabled: false
+    canvasPosition:
+      x: 37
+      "y": 605
+    config:
+      store_error_content: true
+      store_message_content: true
+  - name: assert 404 error
+    type: "#Hume.Orchestra.Filter.FilterProcessor"
+    disabled: false
+    to:
+    - name: Remove EntityGroup
+      disabled: false
+    canvasPosition:
+      x: 197
+      "y": 605
+    config:
+      filter_script: |-
+        KAFKA_HEADER = 'kafka.HEADERS'
+
+        if KAFKA_HEADER in headers:
+          del(headers[KAFKA_HEADER])
+
+        return body['error'].endswith('404]')
+      runtime: JYTHON
+      store_error_content: true
+      store_message_content: true
+  - name: Remove EntityGroup
+    type: "#Hume.Orchestra.Persistence.Neo4jWriter"
+    disabled: false
+    resourceName: bridge-neo4j
+    canvasPosition:
+      x: 350
+      "y": 605
+    config:
+      aggregation_timeout: 300
+      batch_size: 20
+      batch_writes: false
+      cypher_query: |-
+        MATCH (n:EntityGroup {senzingEntityId: toString($body.id)})
+        DETACH DELETE n
+      delay: 0
+      max_retry: 0
+      store_error_content: true
+      store_message_content: true
+      stream_records: false
+      transactionTimeoutInSec: 0

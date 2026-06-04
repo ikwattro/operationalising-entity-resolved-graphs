@@ -1,0 +1,19 @@
+kind: Action
+metadata:
+  name: full-graph
+  knowledge-graph: bridge
+spec:
+  label: full graph
+  query: |-
+    MATCH (n)
+    OPTIONAL MATCH (n)-[r]-(x)
+
+    RETURN n, r, x
+  returnType: GRAPH
+  scope: GLOBAL
+  inclusions: {}
+  actionType: CYPHER
+  canvasOptions:
+    clearCanvas: false
+    fitCanvas: false
+  httpActionIncludeCanvasInPayload: false

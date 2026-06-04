@@ -1,0 +1,7 @@
+kind: DataSource
+metadata:
+  name: OpenOwnership
+spec:
+  name: OpenOwnership
+  neo4jLabel: OpenOwnership
+  color: "#F45D79"

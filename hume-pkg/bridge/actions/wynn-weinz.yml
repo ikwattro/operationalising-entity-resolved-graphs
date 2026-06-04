@@ -1,0 +1,21 @@
+kind: Action
+metadata:
+  name: wynn-weinz
+  knowledge-graph: bridge
+spec:
+  label: wynn weinz
+  query: |-
+    MATCH (n:Person|Organization)
+    WHERE toLower(n.name) CONTAINS 'wynn'
+    OR toLower(n.name) CONTAINS 'weinz'
+    OPTIONAL MATCH (n)-[r]-(x)
+    RETURN n, r, x
+  returnType: GRAPH
+  scope: GLOBAL
+  inclusions: {}
+  actionType: CYPHER
+  canvasOptions:
+    clearCanvas: false
+    fitCanvas: false
+    layout: SEQUENTIAL
+  httpActionIncludeCanvasInPayload: false

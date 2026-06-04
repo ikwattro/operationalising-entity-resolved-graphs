@@ -1,0 +1,16 @@
+kind: EcosystemResource
+metadata:
+  name: bridge-neo4j
+spec:
+  fqn: "#Hume.Orchestra.Resource.Neo4j"
+  parameters:
+  - name: database
+    value: bridge
+  - name: host
+    value: neo4j
+  - name: password
+    value: hellopassword
+  - name: port
+    value: 7687
+  - name: user
+    value: neo4j

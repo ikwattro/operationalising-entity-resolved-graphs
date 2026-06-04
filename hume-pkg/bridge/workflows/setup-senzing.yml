@@ -1,0 +1,269 @@
+kind: Workflow
+metadata:
+  name: Setup Senzing
+  knowledge-graph: bridge
+spec:
+  label: Setup Senzing
+  autostart: false
+  skipUpdateIfRunning: true
+  startWorkflowAfterImport: false
+  restartWorkflowAfterUpdate: true
+  schedule: {}
+  components:
+  - name: Trigger
+    type: "#Hume.Orchestra.Action.Trigger"
+    disabled: false
+    to:
+    - name: Get Server Info
+      disabled: false
+    canvasPosition:
+      x: 400
+      "y": 340
+    config:
+      contextVariableDefaultValue: false
+      delay: 0
+      managedByContext: false
+      store_error_content: true
+      store_message_content: true
+  - name: Get Server Info
+    type: "#Hume.Orchestra.Http.HttpRequest"
+    disabled: false
+    to:
+    - name: Observer
+      disabled: false
+    canvasPosition:
+      x: 640
+      "y": 340
+    config:
+      always_redeliver: false
+      backoff_multiplier: 2
+      binary_download: false
+      binary_upload: false
+      concurrent: false
+      connections_per_route: 1
+      enable_retry: false
+      http_client_connect_timeout: 0
+      http_client_socket_timeout: 0
+      maximum_redeliveries: 5
+      merge_body_at_root: true
+      method: GET
+      multipart: false
+      number_of_threads: 1
+      outputPath: enriched
+      raw_response: false
+      redelivery_delay: 1000
+      send_full_body_message: false
+      store_error_content: true
+      store_message_content: true
+      throw_error_if_collision: true
+      uri: http://senzing-api-server:8582/server-info
+      use_exponential_backoff: false
+  - name: Observer
+    type: "#Hume.Orchestra.Monitor.Observer"
+    disabled: false
+    canvasPosition:
+      x: 880
+      "y": 340
+    config:
+      store_error_content: true
+      store_message_content: true
+  - name: Trigger 2
+    type: "#Hume.Orchestra.Action.Trigger"
+    disabled: false
+    to:
+    - name: create ICIJ data source
+      disabled: false
+    - name: create OO data source
+      disabled: false
+    - name: create OS data source
+      disabled: false
+    canvasPosition:
+      x: 380
+      "y": 700
+    config:
+      contextVariableDefaultValue: false
+      delay: 0
+      managedByContext: false
+      store_error_content: true
+      store_message_content: true
+  - name: create OS data source
+    type: "#Hume.Orchestra.Http.HttpRequest"
+    disabled: false
+    to:
+    - name: Observer 2
+      disabled: false
+    canvasPosition:
+      x: 620
+      "y": 520
+    config:
+      always_redeliver: false
+      backoff_multiplier: 2
+      binary_download: false
+      binary_upload: false
+      concurrent: false
+      connections_per_route: 1
+      enable_retry: false
+      forward_response_headers: false
+      http_client_connect_timeout: 0
+      http_client_socket_timeout: 0
+      maximum_redeliveries: 5
+      merge_body_at_root: true
+      method: POST
+      multipart: false
+      number_of_threads: 1
+      outputPath: enriched
+      raw_response: false
+      redelivery_delay: 1000
+      send_full_body_message: false
+      store_error_content: true
+      store_message_content: true
+      throw_error_if_collision: true
+      uri: http://senzing-api-server:8582/data-sources?dataSource=OPEN-SANCTIONS
+      use_exponential_backoff: false
+  - name: Observer 2
+    type: "#Hume.Orchestra.Monitor.Observer"
+    disabled: false
+    to:
+    - name: wait ds created
+      disabled: false
+    canvasPosition:
+      x: 900
+      "y": 700
+    config:
+      store_error_content: true
+      store_message_content: true
+  - name: wait ds created
+    type: "#Hume.Orchestra.Monitor.IdleWatcher"
+    disabled: false
+    to:
+    - name: List Data Sources 2
+      disabled: false
+    canvasPosition:
+      x: 1100
+      "y": 700
+    config:
+      maxIdleTime: 2000
+      store_error_content: true
+      store_message_content: true
+  - name: List Data Sources 2
+    type: "#Hume.Orchestra.Http.HttpRequest"
+    disabled: false
+    to:
+    - name: Observer 3
+      disabled: false
+    canvasPosition:
+      x: 1320
+      "y": 700
+    config:
+      always_redeliver: false
+      backoff_multiplier: 2
+      binary_download: false
+      binary_upload: false
+      concurrent: false
+      connections_per_route: 1
+      enable_retry: false
+      http_client_connect_timeout: 0
+      http_client_socket_timeout: 0
+      maximum_redeliveries: 5
+      merge_body_at_root: true
+      method: GET
+      multipart: false
+      number_of_threads: 1
+      outputPath: enriched
+      raw_response: false
+      redelivery_delay: 1000
+      send_full_body_message: false
+      store_error_content: true
+      store_message_content: true
+      throw_error_if_collision: true
+      uri: http://senzing-api-server:8582/data-sources
+      use_exponential_backoff: false
+  - name: Observer 3
+    type: "#Hume.Orchestra.Monitor.Observer"
+    disabled: false
+    to:
+    - name: Stop Workflow
+      disabled: false
+    canvasPosition:
+      x: 1540
+      "y": 700
+    config:
+      store_error_content: true
+      store_message_content: true
+  - name: Stop Workflow
+    type: "#Hume.Orchestra.Action.Stop"
+    disabled: false
+    canvasPosition:
+      x: 1760
+      "y": 700
+    config:
+      store_error_content: true
+      store_message_content: true
+  - name: create OO data source
+    type: "#Hume.Orchestra.Http.HttpRequest"
+    disabled: false
+    to:
+    - name: Observer 2
+      disabled: false
+    canvasPosition:
+      x: 620
+      "y": 700
+    config:
+      always_redeliver: false
+      backoff_multiplier: 2
+      binary_download: false
+      binary_upload: false
+      concurrent: false
+      connections_per_route: 1
+      enable_retry: false
+      forward_response_headers: false
+      http_client_connect_timeout: 0
+      http_client_socket_timeout: 0
+      maximum_redeliveries: 5
+      merge_body_at_root: true
+      method: POST
+      multipart: false
+      number_of_threads: 1
+      outputPath: enriched
+      raw_response: false
+      redelivery_delay: 1000
+      send_full_body_message: false
+      store_error_content: true
+      store_message_content: true
+      throw_error_if_collision: true
+      uri: http://senzing-api-server:8582/data-sources?dataSource=OPEN-OWNERSHIP
+      use_exponential_backoff: false
+  - name: create ICIJ data source
+    type: "#Hume.Orchestra.Http.HttpRequest"
+    disabled: false
+    to:
+    - name: Observer 2
+      disabled: false
+    canvasPosition:
+      x: 620
+      "y": 880
+    config:
+      always_redeliver: false
+      backoff_multiplier: 2
+      binary_download: false
+      binary_upload: false
+      concurrent: false
+      connections_per_route: 1
+      enable_retry: false
+      forward_response_headers: false
+      http_client_connect_timeout: 0
+      http_client_socket_timeout: 0
+      maximum_redeliveries: 5
+      merge_body_at_root: true
+      method: POST
+      multipart: false
+      number_of_threads: 1
+      outputPath: enriched
+      raw_response: false
+      redelivery_delay: 1000
+      send_full_body_message: false
+      store_error_content: true
+      store_message_content: true
+      throw_error_if_collision: true
+      uri: http://senzing-api-server:8582/data-sources?dataSource=ICIJ
+      use_exponential_backoff: false

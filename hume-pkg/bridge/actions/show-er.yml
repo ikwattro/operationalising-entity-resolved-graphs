@@ -1,0 +1,17 @@
+kind: Action
+metadata:
+  name: show-er
+  knowledge-graph: bridge
+spec:
+  label: show ER
+  query: |-
+    MATCH path=(a)-[:RESOLVED_TO]->(eg)<-[:RESOLVED_TO]-(b)
+    RETURN path
+  returnType: GRAPH
+  scope: GLOBAL
+  inclusions: {}
+  actionType: CYPHER
+  canvasOptions:
+    clearCanvas: false
+    fitCanvas: false
+  httpActionIncludeCanvasInPayload: false

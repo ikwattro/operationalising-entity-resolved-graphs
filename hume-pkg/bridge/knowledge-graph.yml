@@ -1,0 +1,449 @@
+kind: KnowledgeGraph
+metadata:
+  name: bridge
+  knowledge-graph: bridge
+spec:
+  label: bridge
+  strictness:
+    schema: true
+    perspectives: true
+    actions: true
+    patterns: false
+    alerts: false
+    collections: false
+    styles: false
+    grouping: true
+  access:
+    strict: false
+  schema:
+    strict: true
+    identity: {}
+    classes:
+    - label: EntityGroup
+      color: "#009EC1"
+      icon: mdi-link-variant
+      canvasPosition:
+        x: 77
+        "y": 229
+      attributes:
+      - label: id
+        type: STRING
+        full_text: false
+        unique: false
+        position: 1
+        list: false
+      - label: senzingEntityId
+        type: STRING
+        full_text: false
+        unique: false
+        position: 2
+        list: false
+    - label: Organization
+      color: "#4D9EF4"
+      icon: business
+      canvasPosition:
+        x: 238
+        "y": -33
+      dataSources:
+      - OpenSanctions
+      - OpenOwnership
+      attributes:
+      - label: id
+        type: STRING
+        full_text: false
+        unique: true
+        position: 1
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: source
+        type: STRING
+        full_text: false
+        unique: false
+        position: 2
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: sourceCode
+        type: STRING
+        full_text: false
+        unique: false
+        position: 3
+        list: false
+      - label: name
+        type: STRING
+        full_text: true
+        unique: false
+        position: 4
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: alias
+        type: STRING
+        full_text: false
+        unique: false
+        position: 5
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: true
+      - label: registrationCountry
+        type: STRING
+        full_text: false
+        unique: false
+        position: 6
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: registrationDate
+        type: DATE
+        full_text: false
+        unique: false
+        position: 7
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: nationalIdType
+        type: STRING
+        full_text: false
+        unique: false
+        position: 8
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: nationalIdNumber
+        type: STRING
+        full_text: false
+        unique: false
+        position: 9
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: dissolutionDate
+        type: DATE
+        full_text: false
+        unique: false
+        position: 10
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: riskTopics
+        type: STRING
+        full_text: false
+        unique: false
+        position: 11
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: address
+        type: STRING
+        full_text: true
+        unique: false
+        position: 12
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: addressCountry
+        type: STRING
+        full_text: false
+        unique: false
+        position: 13
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: senzingEntityId
+        type: STRING
+        full_text: false
+        unique: false
+        position: 14
+        list: false
+    - label: Person
+      color: "#F45D79"
+      icon: person
+      canvasPosition:
+        x: -72
+        "y": -36
+      dataSources:
+      - OpenSanctions
+      - OpenOwnership
+      attributes:
+      - label: id
+        type: STRING
+        full_text: false
+        unique: true
+        position: 1
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: source
+        type: STRING
+        full_text: false
+        unique: false
+        position: 2
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: sourceCode
+        type: STRING
+        full_text: false
+        unique: false
+        position: 3
+        list: false
+      - label: name
+        type: STRING
+        full_text: false
+        unique: false
+        position: 4
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: alias
+        type: STRING
+        full_text: false
+        unique: false
+        position: 5
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: true
+      - label: gender
+        type: STRING
+        full_text: false
+        unique: false
+        position: 6
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: citizenship
+        type: STRING
+        full_text: false
+        unique: false
+        position: 7
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: nationality
+        type: STRING
+        full_text: false
+        unique: false
+        position: 8
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: dateofBirth
+        type: DATE
+        full_text: false
+        unique: false
+        position: 9
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: taxId
+        type: STRING
+        full_text: false
+        unique: false
+        position: 10
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: nationalIdNumber
+        type: STRING
+        full_text: false
+        unique: false
+        position: 11
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: nationalIdType
+        type: STRING
+        full_text: false
+        unique: false
+        position: 12
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: passportNumber
+        type: STRING
+        full_text: false
+        unique: false
+        position: 13
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: address
+        type: STRING
+        full_text: false
+        unique: false
+        position: 14
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: addressCountry
+        type: STRING
+        full_text: false
+        unique: false
+        position: 15
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: url
+        type: STRING
+        full_text: false
+        unique: false
+        position: 16
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      - label: senzingEntityId
+        type: STRING
+        full_text: false
+        unique: false
+        position: 17
+        list: false
+    relationships:
+    - label: CUSTOMER
+      start: Person
+      end: Organization
+      offset: 30.0
+      dataSources:
+      - OpenSanctions
+      - OpenOwnership
+    - label: DIRECTOR
+      start: Person
+      end: Organization
+      offset: 0.0
+      dataSources:
+      - OpenSanctions
+      - OpenOwnership
+    - label: FAMILY
+      start: Person
+      end: Person
+      offset: 35.1
+      attributes:
+      - label: role
+        type: STRING
+        unique: false
+        position: 1
+        dataSources:
+        - OpenSanctions
+        - OpenOwnership
+        list: false
+      dataSources:
+      - OpenSanctions
+      - OpenOwnership
+    - label: INFLUENCE
+      start: Person
+      end: Organization
+      offset: -30.0
+      dataSources:
+      - OpenSanctions
+      - OpenOwnership
+    - label: INFLUENCE
+      start: Organization
+      end: Organization
+      offset: 35.1
+      dataSources:
+      - OpenSanctions
+      - OpenOwnership
+    - label: RESOLVED_TO
+      start: Organization
+      end: EntityGroup
+      offset: 0.0
+    - label: RESOLVED_TO
+      start: Person
+      end: EntityGroup
+      offset: 0.0
+    entityGroupClassFqn: EntityGroup
+    entityGroupRelationshipFqns:
+    - Organization-RESOLVED_TO->EntityGroup
+    - Person-RESOLVED_TO->EntityGroup
+  settings:
+  - name: accessControlEnabled
+    value: false
+  - name: actionMaxResultSize
+    value: 3000
+  - name: alertingDelayedMessageTemplate
+    value: "There are new Event(s) for the Alert $alert_name. Since $notification_previous_time, there have been $eventsSize new Event(s). To see the Event(s), log on to Hume."
+  - name: alertingDelayedSubjectTemplate
+    value: New Event(s) for the Alert $alert_name
+  - name: alertingMessageTemplate
+    value: |-
+      A new Event has been triggered for the Alert $alert_name at $event_time.
+      To see the Event, log on to Hume.
+  - name: alertingSharingEnabled
+    value: false
+  - name: alertingSubjectTemplate
+    value: Alert $alert_name has a new Event
+  - name: allowHtmlActionTabularResults
+    value: false
+  - name: copyCypherEnabled
+    value: true
+  - name: dataRefreshEnabled
+    value: true
+  - name: databaseTimezone
+    value: UTC
+  - name: editDeleteOnlyDataCreatedViaHume
+    value: false
+  - name: fixNodesPosition
+    value: true
+  - name: mdeEnabled
+    value: false
+  - name: operationSizeLimit
+    value: 5000
+  - name: query_feedback_enabled
+    value: true
+  - name: schemaStatisticsEnabled
+    value: true
+  - name: smart_entity_resolution_enabled
+    value: true
+  - name: totalSizeLimit
+    value: 20000
+  - name: typeAheadEnabled
+    value: false
+  - name: visualisationActionsInputParametersHistoryEnabled
+    value: true
+  - name: visualisationCleanWarning
+    value: true
+  - name: visualisationDateFormat
+    value: DEFAULT
+  - name: visualisationDoubleClick
+    value: EXPAND_ALL
+  - name: visualisationFineGrainedSearchEnabled
+    value: true
+  - name: visualisationGeospatialEnabled
+    value: true
+  - name: visualisationGroupingEnabled
+    value: true
+  - name: visualisationSearchHistoryEnabled
+    value: true
+  - name: visualisationTemporalEnabled
+    value: true
+  - name: visualisationTimezone
+    value: UTC
+  - name: visualisationUrlLinkOpenIconEnabled
+    value: false

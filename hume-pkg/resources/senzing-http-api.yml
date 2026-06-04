@@ -1,0 +1,15 @@
+kind: EcosystemResource
+metadata:
+  name: senzing-http-api
+spec:
+  fqn: "#Hume.Orchestra.Resource.HttpApi"
+  parameters:
+  - name: base_url
+    value: http://orchestra:8667
+  - name: endpoints
+    value:
+      senzing-how: /senzing/how
+      senzing-why: /senzing/why
+  - name: request_headers
+    value:
+      Authorization: Basic b3JjaGVzdHJhOm9yY2hlc3RyYQ==

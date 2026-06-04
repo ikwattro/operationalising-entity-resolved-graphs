@@ -1,0 +1,10 @@
+kind: EcosystemResource
+metadata:
+  name: internal-kafka-broker
+spec:
+  fqn: "#Hume.Orchestra.Resource.Kafka"
+  parameters:
+  - name: brokers
+    value: kafka
+  - name: port
+    value: 9092

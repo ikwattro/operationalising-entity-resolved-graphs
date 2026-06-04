@@ -1,0 +1,6 @@
+imports:
+- bridge
+- resources
+removeOtherResources: false
+removeOtherRoles: false
+removeOtherPermissionGroups: false

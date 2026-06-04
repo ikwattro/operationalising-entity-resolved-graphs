@@ -1,0 +1,32 @@
+kind: Action
+metadata:
+  name: merge-records---organization
+  knowledge-graph: bridge
+spec:
+  label: merge records - organization
+  query: |-
+    MATCH (n:Organization)
+    WHERE elementId(n) IN $_selection.nodeElementIds
+    WITH collect(n) AS nodes
+    RETURN nodes, coll.distinct([x IN nodes | x.manualMergeId])[0] AS optionalMergeId
+
+    NEXT
+
+    WHEN optionalMergeId IS NOT NULL THEN {
+      UNWIND nodes AS node
+      SET node.manualMergeId = optionalMergeId
+    } ELSE {
+      WITH randomUUID() AS mergeId
+      UNWIND nodes AS node
+      SET node.manualMergeId = mergeId
+    }
+  returnType: VOID
+  scope: MULTISELECTION
+  inclusions:
+    labels:
+    - Organization
+  actionType: CYPHER
+  canvasOptions:
+    clearCanvas: false
+    fitCanvas: false
+  httpActionIncludeCanvasInPayload: false

@@ -1,0 +1,18 @@
+kind: Action
+metadata:
+  name: senzing---why
+  knowledge-graph: bridge
+spec:
+  label: senzing - why
+  returnType: HTML
+  scope: LOCAL
+  inclusions:
+    labels:
+    - '*'
+  actionType: API
+  httpApiResource: senzing-http-api
+  endpoint: senzing-why
+  canvasOptions:
+    clearCanvas: false
+    fitCanvas: false
+  httpActionIncludeCanvasInPayload: false

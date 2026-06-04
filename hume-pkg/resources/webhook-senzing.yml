@@ -1,0 +1,14 @@
+kind: EcosystemResource
+metadata:
+  name: webhook-senzing
+spec:
+  fqn: "#Hume.Orchestra.Resource.WebhookServer"
+  parameters:
+  - name: host
+    value: 0.0.0.0
+  - name: password
+    value: orchestra
+  - name: port
+    value: 8667
+  - name: user
+    value: orchestra

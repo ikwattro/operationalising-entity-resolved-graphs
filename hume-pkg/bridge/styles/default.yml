@@ -1,0 +1,48 @@
+kind: Style
+metadata:
+  name: default
+  knowledge-graph: bridge
+spec:
+  label: default
+  classes:
+    Organization:
+      caption:
+      - name
+      - nationalIdNumber
+      - registrationCountry
+      - address
+      captionMaxLength: 32
+    Person:
+      caption:
+      - name
+      - dateofBirth
+      - nationalIdNumber
+      - nationality
+      - address
+      captionMaxLength: 32
+    __global__:
+      rules:
+      - type: CLASS_BADGE
+        config:
+          attributeCategory: SCHEMA
+          color: "#AD79E9"
+          attributeValue: OS
+          textAttribute: sourceCode
+          animated: false
+          attributeName: sourceCode
+          position: nw
+          operator: EQUALS
+          textAttributeCategory: SCHEMA
+      - type: CLASS_BADGE
+        config:
+          attributeCategory: SCHEMA
+          color: "#E66F0E"
+          attributeValue: OO
+          textAttribute: sourceCode
+          animated: false
+          attributeName: sourceCode
+          position: nw
+          operator: EQUALS
+          textAttributeCategory: SCHEMA
+  default: true
+  isDefault: true

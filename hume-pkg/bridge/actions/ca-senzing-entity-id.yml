@@ -1,0 +1,21 @@
+kind: Action
+metadata:
+  name: ca-senzing-entity-id
+  knowledge-graph: bridge
+spec:
+  label: ca-senzing-entity-id
+  query: |-
+    MATCH (n)-[:RESOLVED_TO]->(eg)
+    WHERE elementId(n) = $elementId
+    RETURN eg.senzingEntityId AS senzingEntityId, elementId(n) AS id
+  returnType: GRAPH
+  scope: COMPUTED_ATTRIBUTE
+  inclusions:
+    labels:
+    - Organization
+    - Person
+  actionType: CYPHER
+  canvasOptions:
+    clearCanvas: false
+    fitCanvas: false
+  httpActionIncludeCanvasInPayload: false

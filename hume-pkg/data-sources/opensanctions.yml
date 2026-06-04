@@ -1,0 +1,7 @@
+kind: DataSource
+metadata:
+  name: OpenSanctions
+spec:
+  name: OpenSanctions
+  neo4jLabel: OpenSanctions
+  color: "#CDADAD"
